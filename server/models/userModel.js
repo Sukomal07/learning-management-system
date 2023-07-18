@@ -1,0 +1,47 @@
+import { Schema, model } from "mongoose";
+
+const userSchema = new Schema({
+    name:{
+        type:String,
+        required:[true, 'Name is required'],
+        minLength:[3, 'Name must be at least 3 character'],
+        maxLength:[15, 'Name should be less than 15 character'],
+        lowercase:true,
+        trim:true
+    },
+    email:{
+        type:String,
+        unique:true,
+        required:[true, 'Email is required'],
+        trim:true,
+        lowercase:true,
+        match:[/^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/ , 'Please Enter a valid email address']
+    },
+    password:{
+        type:String,
+        required:[true, 'Password is required'],
+        minLength:[8, 'Password must be at least 8 character '],
+        maxLength:[15,'Password should be less than 15 charcater'],
+        match:[/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/, 'Password must be contains at least one uppercase and one lowercase and one digit and one special character'],
+        select:false
+    },
+    avatar:{
+        public_id:{
+            type:String
+        },
+        secure_url:{
+            type:String
+        }
+    },
+    role:{
+        type:String,
+        enum:['USER','ADMIN'],
+        default:'USER'
+    },
+    forgotPasswordToken:String,
+    forgotPasswordExpiry:Date
+},{timestamps:true})
+
+const User = model('User', userSchema)
+
+export default User
