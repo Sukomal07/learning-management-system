@@ -5,7 +5,7 @@ import { isLoggedIn } from "../middleware/authMiddleware.js";
 const router = express.Router()
 
 router.post("/signup",signup)
-router.post("login", login)
+router.post("/login", login)
 router.get("/logout", logout)
 router.get("/myprofile", isLoggedIn, getProfile)
 
