@@ -23,7 +23,6 @@ const userSchema = new Schema({
         type:String,
         required:[true, 'Password is required'],
         minLength:[8, 'Password must be at least 8 character '],
-        maxLength:[15,'Password should be less than 15 charcater'],
         match:[/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/, 'Password must be contains at least one uppercase and one lowercase and one digit and one special character'],
         select:false
     },
@@ -55,10 +54,7 @@ userSchema.methods = {
     generateToken: async function(){
         return await JWT.sign(
             {id:this._id, email:this.email, subscription:this.subscription, role:this.role},
-            process.env.JWT_SECRET,
-            {
-                expiresIn:process.env.JWT_EXPIRE
-            }
+            process.env.JWT_SECRET
         )
     }
 }
