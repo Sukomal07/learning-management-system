@@ -30,7 +30,6 @@ export const signup = async (req, res, next) => {
         res.cookie('token', token, {
             httpOnly: true,
             maxAge: 7 * 24 * 60 * 60 * 1000,
-            secure: true
         })
         res.status(201).json({
             success: true,
@@ -56,12 +55,11 @@ export const login = async (req, res, next) => {
         if (!comparePassword) {
             return next(createError(401, "Invalid email or password"))
         }
-        const token = await User.generateToken()
+        const token = await userData.generateToken()
         userData.password = undefined
         res.cookie('token', token, {
             httpOnly: true,
             maxAge: 7 * 24 * 60 * 60 * 1000,
-            secure: true
         })
         res.status(200).json({
             success: true,
@@ -78,7 +76,6 @@ export const logout = (req, res, next) => {
         res.cookie('token', null , {
             httpOnly:true,
             maxAge:0,
-            secure:true
         })
         res.status(200).json({
             success:true,
