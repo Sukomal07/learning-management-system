@@ -1,7 +1,8 @@
 import createError from "../utils/error.js"
 import User from '../models/userModel.js'
 import bcryptjs from 'bcryptjs'
-
+import cloudinary from 'cloudinary'
+import fs from 'fs'
 export const signup = async (req, res, next) => {
     try {
         const { name, email, password } = req.body
@@ -24,6 +25,27 @@ export const signup = async (req, res, next) => {
         if (!user) {
             return next(createError(401, "User signup failed , Please try again"))
         }
+
+        if (req.file) {
+            try {
+                const result = await cloudinary.v2.uploader.upload(req.file.path, {
+                    folder: 'lms',
+                    width: 250,
+                    height: 250,
+                    gravity: 'faces',
+                    crop: 'fill'
+                })
+                if (result) {
+                    user.avatar.public_id = result.public_id
+                    user.avatar.secure_url = result.secure_url
+
+                    fs.rm(`uploads/${req.file.filename}`)
+                }
+            } catch (error) {
+                return next(createError(500, error.message || "file not uploaded , plese try again"))
+            }
+        }
+
         await user.save()
         user.password = undefined
         const token = await user.generateToken()
@@ -73,26 +95,26 @@ export const login = async (req, res, next) => {
 
 export const logout = (req, res, next) => {
     try {
-        res.cookie('token', null , {
-            httpOnly:true,
-            maxAge:0,
+        res.cookie('token', null, {
+            httpOnly: true,
+            maxAge: 0,
         })
         res.status(200).json({
-            success:true,
-            message:"User log out Successfully"
+            success: true,
+            message: "User log out Successfully"
         })
     } catch (error) {
         return next(createError(500, error.message))
     }
 }
 
-export const getProfile = async(req, res, next) => {
+export const getProfile = async (req, res, next) => {
     try {
         const userId = req.user.id
         const user = await User.findById(userId)
         res.status(200).json({
-            success:true,
-            message:'User details',
+            success: true,
+            message: 'User details',
             user
         })
     } catch (error) {
