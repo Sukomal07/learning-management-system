@@ -189,3 +189,79 @@ export const resetPassword = async (req, res, next) => {
         return next(createError(500, error.message))
     }
 }
+
+export const changePassword = async (req, res, next) => {
+    try {
+        const { oldPassword, newPassword } = req.body
+        const { id } = req.user
+
+        if (!oldPassword || !newPassword) {
+            return next(createError(404, "All feilds are required"))
+        }
+
+        const user = await User.findOne({ id }).select('+password')
+        if (!user) {
+            return next(createError(400, "user does not exists"))
+        }
+
+        const comparePassword = await bcryptjs.compare(oldPassword, newPassword)
+        if (!comparePassword) {
+            return next(createError(401, "Invalid old password"))
+        }
+
+        user.password = newPassword
+        await user.save()
+
+        user.password = undefined
+        res.status(200).json({
+            success: true,
+            message: "password changed successfully"
+        })
+    } catch (error) {
+        return next(createError(500, error.message))
+    }
+}
+
+export const updateProfile = async (req, res, next) => {
+    try {
+        const { name } = req.body
+        const { id } = req.user.id
+        const user = await User.findById({ id })
+
+        if (!user) {
+            return next(createError(400, "user does not exists"))
+        }
+
+        if (req.name) {
+            user.name = name
+        }
+
+        if (req.file) {
+            await cloudinary.v2.uploader.destroy(user.avatar.public_id)
+            try {
+                const result = await cloudinary.v2.uploader.upload(req.file.path, {
+                    folder: 'lms',
+                    width: 250,
+                    height: 250,
+                    gravity: 'faces',
+                    crop: 'fill'
+                })
+                if (result) {
+                    user.avatar.public_id = result.public_id
+                    user.avatar.secure_url = result.secure_url
+
+                    fs.rm(`uploads/${req.file.filename}`)
+                }
+            } catch (error) {
+                return next(createError(500, error.message || "file not uploaded , plese try again"))
+            }
+        }
+        await user.save()
+        res.status(200).json({
+            success: true,
+            message: "profile updated successfully"
+        })
+    } catch (error) {
+        return next(createError(500, error.message))
+    }
+}
