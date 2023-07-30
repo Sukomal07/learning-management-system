@@ -2,7 +2,10 @@ import createError from "../utils/error.js"
 import User from '../models/userModel.js'
 import bcryptjs from 'bcryptjs'
 import cloudinary from 'cloudinary'
-import fs from 'fs'
+import fs from 'fs/promises'
+import sendMail from "../utils/sendMail.js"
+import crypto from 'crypto'
+
 export const signup = async (req, res, next) => {
     try {
         const { name, email, password } = req.body
@@ -116,6 +119,71 @@ export const getProfile = async (req, res, next) => {
             success: true,
             message: 'User details',
             user
+        })
+    } catch (error) {
+        return next(createError(500, error.message))
+    }
+}
+
+export const forgotPassword = async (req, res, next) => {
+    const { email } = req.body
+    if (!email) {
+        return next(createError(400, "Email is required"))
+    }
+    const user = await User.findOne({ email })
+
+    if (!user) {
+        return next(createError(404, "User this email is not found"))
+    }
+    const resetToken = await user.generateResetToken()
+    await user.save()
+    const resetPasswordUrl = `${process.env.FRONTEND_URL}/reset-password/${resetToken}`
+
+    console.log(resetPasswordUrl)
+
+    const subject = "Reset Password";
+    const message = `You can reset your password by clicking <a href="${encodeURI(resetPasswordUrl)}" target="_blank">Reset your password</a>. If the above link does not work for some reason, then copy-paste this link in a new tab: ${encodeURI(resetPasswordUrl)}. If you did not request this, kindly ignore.`;
+
+
+    try {
+        await sendMail(email, subject, message)
+        res.status(200).json({
+            success: true,
+            message: `Reset password email has been send to ${email} successfully`
+        })
+    } catch (error) {
+        user.forgotPasswordToken = undefined
+        user.forgotPasswordExpiry = undefined
+        await user.save()
+        return next(createError(500, error))
+    }
+
+}
+
+export const resetPassword = async (req, res, next) => {
+    try {
+        const { resetToken } = req.params
+        const { password } = re.body
+
+        const forgotPasswordToken = await crypto.createHash('sha256').update(resetToken).digest('hex')
+
+        const user = await User.findOne({
+            forgotPasswordToken,
+            forgotPasswordExpiry: { $gt: Date.now() }
+        })
+
+        if (!user) {
+            return next(createError(400, "Token is invalid or expired, Please try again later"))
+        }
+
+        user.password = password
+        user.forgotPasswordToken = undefined
+        user.forgotPasswordExpiry = undefined
+        await user.save()
+
+        res.status(200).json({
+            success: true,
+            message: "password reset successfully"
         })
     } catch (error) {
         return next(createError(500, error.message))
