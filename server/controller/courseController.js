@@ -20,7 +20,7 @@ export const getLectures = async (req, res, next) => {
     try {
         const { id } = req.params
         const course = await Course.findById(id)
-        if (!courses) {
+        if (!course) {
             return next(createError(404, "No courses found"))
         }
         res.status(200).json({
@@ -31,4 +31,16 @@ export const getLectures = async (req, res, next) => {
     } catch (error) {
         return next(createError(500, error.message))
     }
+}
+
+export const createCourse = async (req, res, next) => {
+
+}
+
+export const updateCourse = async (req, res, next) => {
+
+}
+
+export const deleteCourse = async (req, res, next) => {
+
 }
