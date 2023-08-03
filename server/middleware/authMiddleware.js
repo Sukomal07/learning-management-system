@@ -1,14 +1,22 @@
 import createError from "../utils/error.js"
 import JWT from 'jsonwebtoken'
 
-export const isLoggedIn = async(req, res, next) =>{
-    const {token} = req.cookies
+export const isLoggedIn = async (req, res, next) => {
+    const { token } = req.cookies
 
-    if(!token){
+    if (!token) {
         return next(createError(401, "Please log in again"))
     }
     const userDetails = await JWT.verify(token, process.env.JWT_SECRET)
     req.user = userDetails
 
+    next()
+}
+
+export const authorizedRole = (...rols) => async (req, res, next) => {
+    const currentUserRole = req.user.role
+    if (!rols.includes(currentUserRole)) {
+        return next(createError(400, "You do not have permission"))
+    }
     next()
 }
