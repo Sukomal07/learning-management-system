@@ -223,7 +223,7 @@ export const updateLectures = async (req, res, next) => {
         res.status(200).json({
             success: true,
             message: "Lecture updated successfully",
-            course,
+            course: course.lectures,
         });
     } catch (error) {
         return next(createError(500, error.message));
