@@ -23,6 +23,7 @@
     "mongoose": "^7.3.4",
     "multer": "^1.4.5-lts.1",
     "nodemailer": "^6.9.3",
-    "nodemon": "^3.0.1"
+    "nodemon": "^3.0.1",
+    "razorpay": "^2.9.1"
   }
 }

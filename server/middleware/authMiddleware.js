@@ -16,7 +16,16 @@ export const isLoggedIn = async (req, res, next) => {
 export const authorizedRole = (...rols) => async (req, res, next) => {
     const currentUserRole = req.user.role
     if (!rols.includes(currentUserRole)) {
-        return next(createError(400, "You do not have permission"))
+        return next(createError(403, "You do not have permission"))
+    }
+    next()
+}
+
+export const verifySubscription = async (req, res, next) => {
+    const subscription = req.user.subscription
+    const currentUserRole = req.user.role
+    if (currentUserRole !== 'ADMIN' && subscription.status !== 'active') {
+        return next(createError(403, "please subscribe to access this"))
     }
     next()
 }
