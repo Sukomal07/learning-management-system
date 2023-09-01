@@ -33,19 +33,22 @@
 1. Install Tailwind Css
 
 ```bash
-    npm install -D tailwindcss
+    npm install -D tailwindcss postcss autoprefixer
 ```
 
 2.  Create `tailwind.config.js` file
 
 ```bash
-    npx tailwindcss init
+    npx tailwindcss init -p
 ```
 
-3. Configure your template paths
+3. Configure your template paths in `tailwind.config.js`
 
 ```bash
-    content: ["./src/**/*.{html,js,jsx}"]
+    content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+  ],
 ```
 
 4. Add the Tailwind directives to your CSS
