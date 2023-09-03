@@ -6,13 +6,13 @@ function Footer() {
     const currentYear = currentDate.getFullYear()
     return (
         <>
-            <footer className="bg-slate-600 py-5 px-20 w-full m-auto flex justify-between items-center">
-                <span className='text-lg text-white'>Copyright @{currentYear} All rights reserved</span>
-                <section className='flex gap-4 text-2xl text-white'>
-                    <a href="#" target='_blank' className='cursor-pointer hover:text-blue-500 '><BsFacebook /></a>
-                    <a href="#" target='_blank' className='cursor-pointer hover:text-blue-500 '><BsLinkedin /></a>
-                    <a href="#" target='_blank' className='cursor-pointer hover:text-blue-500'><BsGithub /></a>
-                    <a href="#" target='_blank' className='cursor-pointer hover:text-blue-500 '><BsTwitter /></a>
+            <footer className="bg-white py-5 lg:px-20 px-8 gap-4 w-full flex flex-col lg:flex-row justify-between items-center absolute bottom-0">
+                <span className='text-lg text-slate-600'>Copyright @{currentYear} All rights reserved</span>
+                <section className='flex items-center justify-center gap-5 text-2xl text-slate-400'>
+                    <a href="#" target='_blank' className='cursor-pointer hover:text-blue-500 transition-all ease-in-out duration-300'><BsFacebook /></a>
+                    <a href="#" target='_blank' className='cursor-pointer hover:text-blue-500 transition-all ease-in-out duration-300'><BsLinkedin /></a>
+                    <a href="#" target='_blank' className='cursor-pointer hover:text-blue-500 transition-all ease-in-out duration-300'><BsGithub /></a>
+                    <a href="#" target='_blank' className='cursor-pointer hover:text-blue-500 transition-all ease-in-out duration-300'><BsTwitter /></a>
                 </section>
             </footer>
         </>

@@ -36,7 +36,7 @@
     npm install -D tailwindcss postcss autoprefixer
 ```
 
-2.  Create `tailwind.config.js` file
+2. Create `tailwind.config.js` file
 
 ```bash
     npx tailwindcss init -p
@@ -63,4 +63,10 @@
 
 ```bash
     npm install react-router-dom  react-icons axios react-redux @reduxjs/toolkit react-chartjs-2 chart.js daisyui react-hot-toast @tailwindcss/line-clamp
+```
+
+6.  Add plugins in `tailwind.config.js`
+
+```bash
+    plugins: [require('daisyui'), require('@tailwindcss/line-clamp')]
 ```
