@@ -8,7 +8,7 @@ function HomeLayout({ children }) {
 
     return (
         <div className='relative'>
-            <div className="drawer w-fit absolute ">
+            <div className="drawer w-fit lg:absolute ">
                 <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
                 <div className="p-5">
                     <label htmlFor="my-drawer-2" className="drawer-button cursor-pointer">
