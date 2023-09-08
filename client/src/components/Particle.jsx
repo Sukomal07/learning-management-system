@@ -1,5 +1,6 @@
 import Particles from "react-tsparticles";
 import { loadFull } from "tsparticles";
+
 const Particle = () => {
     const particlesInit = async (main) => {
         await loadFull(main);
@@ -10,13 +11,13 @@ const Particle = () => {
             id="tsparticles"
             init={particlesInit}
             options={{
-                "fullScreen": {
-                    "enable": true,
-                    "zIndex": -1
+                fullScreen: {
+                    enable: true,
+                    zIndex: -1,
                 },
-                "background": {
-                    "repeat": "no-repeat",
-                    "size": "cover"
+                background: {
+                    repeat: "no-repeat",
+                    size: "cover",
                 },
                 fpsLimit: 120,
                 interactivity: {
@@ -43,10 +44,10 @@ const Particle = () => {
                 },
                 particles: {
                     color: {
-                        value: "#e51010",
+                        value: "#e40c0c",
                     },
                     links: {
-                        color: "#aedf0c",
+                        color: "#dfca0c",
                         distance: 150,
                         enable: true,
                         opacity: 0.5,
@@ -65,9 +66,9 @@ const Particle = () => {
                     number: {
                         density: {
                             enable: true,
-                            area: 800,
+                            area: 700,
                         },
-                        value: 80,
+                        value: 100,
                     },
                     opacity: {
                         value: 0.5,
@@ -82,7 +83,7 @@ const Particle = () => {
                 detectRetina: true,
             }}
         />
-    )
-}
+    );
+};
 
-export default Particle
+export default Particle;

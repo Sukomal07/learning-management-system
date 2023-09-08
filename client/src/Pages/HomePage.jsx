@@ -13,10 +13,11 @@ const HomePage = () => {
                     <p className="text-gray-200 lg:text-xl tracking-wider">We have a large library of courses taught by highly skilled and qualified faculties at a very affordable cost </p>
                     <div className="flex gap-4 lg:flex-row md:flex-row items-center">
                         <Link to={'/courses'} className="w-fit">
-                            <button className="rounded-md lg:w-48 md:w-48 w-36 py-2 lg:text-lg md:text-lg  font-semibold bg-white hover:bg-slate-600 transition-all ease-in-out duration-300 text-slate-600 cursor-pointer hover:text-white">Expole Courses</button>
+                            <button className="rounded-md lg:w-48 md:w-48 w-36 py-2 lg:text-lg md:text-lg  font-semibold bg-yellow-500 hover:bg-white hover:text-yellow-400 transition-all ease-in-out duration-300 text-black border-2 border-white hover:border-2 hover:border-yellow-400 cursor-pointer ">Expole Courses</button>
                         </Link>
                         <Link to={'/contact'} className="w-fit">
-                            <button className="rounded-md lg:w-48 md:w-48 w-36 py-2 lg:text-lg md:text-lg  font-semibold bg-white text-slate-600 cursor-pointer hover:bg-slate-600 transition-all ease-in-out duration-300 hover:text-white">Contact Us</button>
+                            <button className="rounded-md lg:w-48 md:w-48 w-36 py-2 lg:text-lg md:text-lg  font-semibold bg-transparent text-white border-2 border-yellow-400  hover:border-2 hover:border-white cursor-pointer hover:bg-yellow-400
+                            transition-all ease-in-out duration-300 hover:text-black">Contact Us</button>
                         </Link>
                     </div>
                 </div>
