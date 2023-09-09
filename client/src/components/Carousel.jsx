@@ -1,17 +1,36 @@
-function Carousel({ image, title, desc, slidenumber, totalslide }) {
+import { useState } from "react";
+
+import CarouselDiv from "../components/CarouselDiv";
+import { celeb } from "../constants/celebData.js";
+
+function Carousel() {
+    const [slidenumber, setSlideNumber] = useState(1);
+
+    const handlePrevClick = () => {
+        setSlideNumber((currSlide) => {
+            return currSlide === 1 ? celeb.length : currSlide - 1;
+        });
+    };
+
+    const handleNextClick = () => {
+        setSlideNumber((currSlide) => {
+            return currSlide === celeb.length ? 1 : currSlide + 1;
+        });
+    };
+
     return (
-        <div id={`slide${slidenumber}`} className="carousel-item relative w-full justify-center">
-            <div className='flex flex-col gap-5 justify-center items-center'>
-                <img src={image} className="w-40 h-40 lg:w-[300px] lg:h-[300px] rounded-3xl" />
-                <p className='lg:text-xl text-[1rem] text-slate-500 text-center'>{desc}</p>
-                <h3 className='font-bold text-center text-white text-xl'>{title}</h3>
+        <div className="relative">
+            <a href={`#slide${slidenumber}`} onClick={handlePrevClick} className="btn btn-circle absolute z-30 flex justify-center items-center  lg:left-5  left-1 top-1/2">❮</a>
+            <div className="carousel w-full relative">
+                {celeb &&
+                    celeb.map((person) => (
+                        <CarouselDiv key={person.slidenumber} {...person} totalslide={celeb.length} />
+                    ))}
             </div>
-            <div className="absolute flex justify-between transform -translate-y-1/2 lg:left-5 lg:right-5 left-1 right-1 top-1/2">
-                <a href={`#slide${slidenumber === 1 ? totalslide : slidenumber - 1}`} className="btn btn-circle">❮</a>
-                <a href={`#slide${slidenumber === totalslide ? 1 : slidenumber + 1}`} className="btn btn-circle">❯</a>
-            </div>
+
+            <a href={`#slide${slidenumber}`} onClick={handleNextClick} className="btn btn-circle absolute z-30 flex justify-center items-center  lg:right-5  right-1 top-1/2">❯</a>
         </div>
-    )
+    );
 }
 
-export default Carousel
+export default Carousel;

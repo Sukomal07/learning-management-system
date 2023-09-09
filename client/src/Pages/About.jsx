@@ -2,7 +2,6 @@ import aboutMainImage from '../assets/Images/aboutMainImage.png'
 import option2 from '../assets/json/option2.json'
 import Carousel from '../components/Carousel'
 import Particle from '../components/Particle'
-import { celeb } from '../constants/celebData.js'
 import HomeLayout from '../layouts/HomeLayout'
 function About() {
     return (
@@ -22,9 +21,7 @@ function About() {
                     </div>
                 </section>
                 <section className='pt-4 w-full lg:w-[80%] lg:mx-auto'>
-                    <div className="carousel w-full">
-                        {celeb && celeb.map(person => <Carousel key={person.slidenumber} {...person} totalslide={celeb.length} />)}
-                    </div>
+                    <Carousel />
                 </section>
             </div>
         </HomeLayout>
