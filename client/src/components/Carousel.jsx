@@ -1,4 +1,3 @@
-
 function Carousel({ image, title, desc, slidenumber, totalslide }) {
     return (
         <div id={`slide${slidenumber}`} className="carousel-item relative w-full justify-center">

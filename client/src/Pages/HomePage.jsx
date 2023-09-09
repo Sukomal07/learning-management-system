@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom"
 
-import HomeImage from "../assets/homeImage.png"
+import HomeImage from "../assets/Images/homeImage.png"
 import option1 from '../assets/json/option1.json'
 import Particle from "../components/Particle"
-import HomeLayout from "../Layouts/HomeLayout"
+import HomeLayout from "../layouts/HomeLayout"
 const HomePage = () => {
     return (
         <HomeLayout>

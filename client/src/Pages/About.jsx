@@ -3,7 +3,7 @@ import option2 from '../assets/json/option2.json'
 import Carousel from '../components/Carousel'
 import Particle from '../components/Particle'
 import celeb from '../constants/celebData.js'
-import HomeLayout from '../Layouts/HomeLayout'
+import HomeLayout from '../layouts/HomeLayout'
 function About() {
     return (
         <HomeLayout>
