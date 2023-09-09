@@ -32,10 +32,10 @@
     },
     "particles": {
         "color": {
-            "value": "#e40c0c"
+            "value": "random"
         },
         "links": {
-            "color": "#dfca0c",
+            "color": "random",
             "distance": 150,
             "enable": true,
             "opacity": 0.5,
