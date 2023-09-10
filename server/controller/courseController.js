@@ -41,7 +41,7 @@ export const createCourse = async (req, res, next) => {
         if (!title || !description || !category || !createdBy) {
             return next(createError(400, "Please enter all input fields"))
         }
-        const newCourse = await Course.create({
+        const newCourse = new Course({
             title,
             description,
             category,
@@ -51,6 +51,18 @@ export const createCourse = async (req, res, next) => {
                 secure_url: "http"
             }
         })
+
+        try {
+            await newCourse.validate();
+        } catch (error) {
+            const validationErrors = [];
+            for (const key in error.errors) {
+                validationErrors.push(error.errors[key].message);
+            }
+            return res.status(400).json({ success: false, message: validationErrors.join(', ') });
+        }
+
+
         if (!newCourse) {
             return next(createError(400, "course created failed"))
         }

@@ -8,15 +8,17 @@ import crypto from 'crypto'
 
 export const signup = async (req, res, next) => {
     try {
-        const { name, email, password } = req.body
+        const { name, email, password } = req.body;
         if (!name || !email || !password) {
-            return next(createError(401, "All input feilds required"))
+            return next(createError(401, "All input fields required"));
         }
+
         const userExists = await User.findOne({ email });
         if (userExists) {
-            return next(createError(401, "Email already exists"))
+            return res.status(401).json({ success: false, message: "Email already exists" });
         }
-        const user = await User.create({
+
+        const user = new User({
             name,
             email,
             password,
@@ -24,9 +26,16 @@ export const signup = async (req, res, next) => {
                 public_id: email,
                 secure_url: 'http'
             }
-        })
-        if (!user) {
-            return next(createError(401, "User signup failed , Please try again"))
+        });
+
+        try {
+            await user.validate();
+        } catch (error) {
+            const validationErrors = [];
+            for (const key in error.errors) {
+                validationErrors.push(error.errors[key].message);
+            }
+            return res.status(400).json({ success: false, message: validationErrors.join(', ') });
         }
 
         if (req.file) {
@@ -49,22 +58,23 @@ export const signup = async (req, res, next) => {
             }
         }
 
-        await user.save()
-        user.password = undefined
-        const token = await user.generateToken()
+        await user.save();
+        user.password = undefined;
+        const token = await user.generateToken();
         res.cookie('token', token, {
             httpOnly: true,
             maxAge: 7 * 24 * 60 * 60 * 1000,
-        })
+        });
         res.status(201).json({
             success: true,
             message: 'User created Successfully',
             user
-        })
+        });
     } catch (error) {
-        return next(createError(500, error.message))
+        return next(createError(500, error.message));
     }
-}
+};
+
 
 export const login = async (req, res, next) => {
     try {
@@ -138,8 +148,6 @@ export const forgotPassword = async (req, res, next) => {
     const resetToken = await user.generateResetToken()
     await user.save()
     const resetPasswordUrl = `${process.env.FRONTEND_URL}/reset-password/${resetToken}`
-
-    console.log(resetPasswordUrl)
 
     const subject = "Reset Password";
     const message = `You can reset your password by clicking <a href="${encodeURI(resetPasswordUrl)}" target="_blank">Reset your password</a>. If the above link does not work for some reason, then copy-paste this link in a new tab: ${encodeURI(resetPasswordUrl)}. If you did not request this, kindly ignore.`;
