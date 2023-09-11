@@ -73,24 +73,24 @@ function SignUp() {
                     <div className='flex items-center w-full gap-10 '>
                         {
                             viewImage ? (
-                                <img src={viewImage} alt="photo" className='rounded-[50%] w-14 h-14' />
+                                <img src={viewImage} alt="photo" className='rounded-[50%] w-14 h-14 hidden lg:block' />
                             ) : (
                                 <label htmlFor="image" className='text-xl hidden lg:block md:block'><BsCloudUpload /></label>
                             )
                         }
                         <input type="file" name='image' id='image' accept='.jpg, .jpeg, .png, .svg' className="file-input file-input-bordered file-input-warning w-full  text-white" onChange={getImage} />
                     </div>
-                    <div className='flex items-center w-full gap-10 '>
-                        <label htmlFor="name" className='text-xl hidden lg:block md:block'><BsPerson /></label>
-                        <input type="text" name='name' id='name' placeholder="Enter Name" className="input text-white input-primary w-full" onChange={handleUserInput} />
+                    <div className='flex items-center w-full gap-4 border-2 border-yellow-500 px-4 rounded-lg h-14 bg-slate-900'>
+                        <label htmlFor="name" className='text-xl hidden lg:block md:block text-yellow-500'><BsPerson /></label>
+                        <input type="text" name='name' id='name' placeholder="Enter Name" className="py-2 border-0 outline-0 text-xl text-white bg-transparent w-full " onChange={handleUserInput} />
                     </div>
-                    <div className='flex items-center w-full gap-10'>
-                        <label htmlFor="email" className='text-xl hidden lg:block md:block'><BsEnvelope /></label>
-                        <input type="email" name="email" id="email" placeholder='Enter Email' className="input text-white input-primary w-full" onChange={handleUserInput} />
+                    <div className='flex items-center w-full gap-4 border-2 border-yellow-500 px-4 rounded-lg h-14 bg-slate-900'>
+                        <label htmlFor="email" className='text-xl hidden lg:block md:block text-yellow-500'><BsEnvelope /></label>
+                        <input type="email" name="email" id="email" placeholder='Enter Email' className="py-2 border-0 outline-0 text-xl text-white bg-transparent w-full " onChange={handleUserInput} />
                     </div>
-                    <div className='flex items-center w-full gap-10 '>
-                        <label htmlFor="password" className='text-xl hidden lg:block md:block'><BsLock /></label>
-                        <input type="password" name="password" id="password" placeholder='Enter Password' className="input text-white input-primary w-full " onChange={handleUserInput} />
+                    <div className='flex items-center w-full gap-4 border-2 border-yellow-500 px-4 rounded-lg h-14 bg-slate-900'>
+                        <label htmlFor="password" className='text-xl hidden lg:block md:block text-yellow-500'><BsLock /></label>
+                        <input type="password" name="password" id="password" placeholder='Enter Password' className="py-2 border-0 outline-0 text-xl text-white bg-transparent w-full " onChange={handleUserInput} />
                     </div>
                     <button type='submit' className='btn btn-primary w-full'>SignUp</button>
                 </form>
