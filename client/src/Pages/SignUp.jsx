@@ -64,13 +64,13 @@ function SignUp() {
         <HomeLayout>
             <Particle option={option3} />
             <div className='flex flex-col gap-3 justify-center items-center h-screen'>
-                <form onSubmit={createAccount} className='lg:w-[450px] w-[90%] md:w-1/2 h-[80%] lg:h-[70%] p-7 flex flex-col gap-4 justify-between rounded-md bg-white text-black shadow-md'>
+                <form onSubmit={createAccount} className='lg:w-[450px] w-[90%] md:w-1/2 h-[80%] p-7 flex flex-col gap-4 justify-between rounded-md bg-white text-black shadow-md'>
                     <div>
                         <h1 className='text-3xl font-semibold mb-3'>Sign Up</h1>
-                        <p className='text-slate-400'>Please fill in this form to create an account!</p>
+                        <p className='text-slate-400'>Please fill this form to create an account</p>
                     </div>
                     <hr className='border-t-2 border-slate-500' />
-                    <div className='flex items-center w-full justify-around '>
+                    <div className='flex items-center w-full gap-10 '>
                         {
                             viewImage ? (
                                 <img src={viewImage} alt="photo" className='rounded-[50%] w-14 h-14' />
@@ -78,21 +78,21 @@ function SignUp() {
                                 <label htmlFor="image" className='text-xl hidden lg:block md:block'><BsCloudUpload /></label>
                             )
                         }
-                        <input type="file" name='image' id='image' accept='.jpg, .jpeg, .png, .svg' className="file-input file-input-bordered file-input-warning w-full max-w-xs text-white" onChange={getImage} />
+                        <input type="file" name='image' id='image' accept='.jpg, .jpeg, .png, .svg' className="file-input file-input-bordered file-input-warning w-full  text-white" onChange={getImage} />
                     </div>
-                    <div className='flex items-center w-full justify-around '>
+                    <div className='flex items-center w-full gap-10 '>
                         <label htmlFor="name" className='text-xl hidden lg:block md:block'><BsPerson /></label>
-                        <input type="text" name='name' id='name' placeholder="Enter Name" className="input text-white input-primary w-full max-w-xs" onChange={handleUserInput} />
+                        <input type="text" name='name' id='name' placeholder="Enter Name" className="input text-white input-primary w-full" onChange={handleUserInput} />
                     </div>
-                    <div className='flex items-center w-full justify-around'>
+                    <div className='flex items-center w-full gap-10'>
                         <label htmlFor="email" className='text-xl hidden lg:block md:block'><BsEnvelope /></label>
-                        <input type="email" name="email" id="email" placeholder='Enter Email' className="input text-white input-primary w-full max-w-xs" onChange={handleUserInput} />
+                        <input type="email" name="email" id="email" placeholder='Enter Email' className="input text-white input-primary w-full" onChange={handleUserInput} />
                     </div>
-                    <div className='flex items-center w-full justify-around '>
+                    <div className='flex items-center w-full gap-10 '>
                         <label htmlFor="password" className='text-xl hidden lg:block md:block'><BsLock /></label>
-                        <input type="password" name="password" id="password" placeholder='Enter Password' className="input text-white input-primary w-full max-w-xs" onChange={handleUserInput} />
+                        <input type="password" name="password" id="password" placeholder='Enter Password' className="input text-white input-primary w-full " onChange={handleUserInput} />
                     </div>
-                    <button type='submit' className='btn btn-primary w-[90%] mx-auto'>SignUp</button>
+                    <button type='submit' className='btn btn-primary w-full'>SignUp</button>
                 </form>
                 <p className='text-xl text-white'>Already have an account ?  <Link to={'/login'} className='text-2xl text-blue-500 hover:underline '>Login</Link></p>
             </div>
