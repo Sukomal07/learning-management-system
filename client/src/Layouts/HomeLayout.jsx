@@ -1,18 +1,31 @@
+import { useEffect } from 'react';
 import { FiMenu } from 'react-icons/fi'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 
 import Footer from '../components/Footer'
+import { logout } from '../redux/slices/AuthSlice';
 
 function HomeLayout({ children }) {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const location = useLocation();
 
     const isLoggedIn = useSelector((state) => state?.auth?.isLoggedIn);
     const role = useSelector((state) => state?.auth?.role);
 
-
+    async function onLogout() {
+        const response = await dispatch(logout())
+        if (response.payload?.success) {
+            navigate('/')
+        }
+    }
+    useEffect(() => {
+        if (isLoggedIn && location.pathname === '/login' || location.pathname === '/signup' || location.pathname === '/profile' || location.pathname === '/admin/dashboard') {
+            navigate('/')
+        }
+    }, [location.pathname, isLoggedIn, navigate])
 
     return (
         <div className='relative'>
@@ -50,15 +63,15 @@ function HomeLayout({ children }) {
                         {isLoggedIn && (
                             <>
                                 <li>
-                                    <Link to={'/user/profile'} className='w-full'>
+                                    <Link to={'/profile'} className='w-full'>
                                         Profile
                                     </Link>
                                 </li>
-                                <Link to={'/logout'} className='w-full absolute bottom-12 left-0 px-4'>
+                                <div onClick={onLogout} className='w-full absolute bottom-12 left-0 px-4'>
                                     <button className='btn-secondary py-2 w-full font-semibold rounded-md '>
                                         LogOut
                                     </button>
-                                </Link>
+                                </div>
                             </>
                         )}
                     </ul>
