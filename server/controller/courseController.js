@@ -37,8 +37,8 @@ export const getLectures = async (req, res, next) => {
 
 export const createCourse = async (req, res, next) => {
     try {
-        const { title, description, category, createdBy } = req.body
-        if (!title || !description || !category || !createdBy) {
+        const { thumbnail, title, description, category, createdBy } = req.body
+        if (!thumbnail || !title || !description || !category || !createdBy) {
             return next(createError(400, "Please enter all input fields"))
         }
         const newCourse = new Course({
