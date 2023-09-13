@@ -7,7 +7,7 @@ const initialState = {
     courseData: []
 }
 
-export const getAllCourse = createAsyncThunk('/auth/course', async () => {
+export const getAllCourse = createAsyncThunk('/course/get', async () => {
     try {
         toast.loading("loading course data...", {
             position: 'top-center'
@@ -35,4 +35,4 @@ const courseSlice = createSlice({
     }
 })
 
-export default courseSlice
+export default courseSlice.reducer
