@@ -22,10 +22,10 @@ function HomeLayout({ children }) {
         }
     }
     useEffect(() => {
-        if (isLoggedIn && location.pathname === '/login' || location.pathname === '/signup' || location.pathname === '/profile' || location.pathname === '/admin/dashboard') {
+        if (isLoggedIn && (location.pathname === '/login' || location.pathname === '/signup' || location.pathname === '/profile' || location.pathname === '/admin/dashboard')) {
             navigate('/')
         }
-    }, [location.pathname, isLoggedIn, navigate])
+    }, [isLoggedIn, location.pathname, navigate])
 
     return (
         <div className='relative'>
