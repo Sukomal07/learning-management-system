@@ -36,7 +36,7 @@ function LogIn() {
         <HomeLayout>
             <Particle option={option2} />
             <div className='flex flex-col gap-3 justify-center items-center h-screen'>
-                <form onSubmit={onLogin} className='lg:w-[450px] w-[90%] md:w-1/2 h-[60%] p-7 flex flex-col justify-between rounded-md bg-white text-black shadow-md'>
+                <form onSubmit={onLogin} className='lg:w-[450px] w-[90%] md:w-1/2 h-fit p-7 flex flex-col justify-between gap-7 rounded-md bg-white text-black shadow-md'>
                     <div>
                         <h1 className='text-3xl font-semibold mb-3'>Log In</h1>
                         <p className='text-slate-400'>Please fill this form to login your account</p>

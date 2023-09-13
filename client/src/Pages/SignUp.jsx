@@ -64,7 +64,7 @@ function SignUp() {
         <HomeLayout>
             <Particle option={option3} />
             <div className='flex flex-col gap-3 justify-center items-center h-screen'>
-                <form onSubmit={createAccount} className='lg:w-[450px] w-[90%] md:w-1/2 h-[80%] p-7 flex flex-col gap-4 justify-between rounded-md bg-white text-black shadow-md'>
+                <form onSubmit={createAccount} className='lg:w-[450px] w-[90%] md:w-1/2 h-fit p-7 flex flex-col gap-5 justify-between rounded-md bg-white text-black shadow-md'>
                     <div>
                         <h1 className='text-3xl font-semibold mb-3'>Sign Up</h1>
                         <p className='text-slate-400'>Please fill this form to create an account</p>
