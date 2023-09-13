@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import axiosInstance from '../../helpers/AxiosInstance'
 
 const initialState = {
-    isLoggedIn: localStorage.getItem('isLoggedIn') || false,
+    isLoggedIn: localStorage.getItem("isLoggedIn") || false,
     role: localStorage.getItem("role") || "",
     data: localStorage.getItem("data") || {}
 }
@@ -15,12 +15,19 @@ export const signup = createAsyncThunk("/auth/signup", async (data) => {
             position: 'top-center'
         });
         const response = await axiosInstance.post('/user/signup', data);
-        toast.dismiss();
-        toast.success(response.data.message);
-        return response.data;
+        if (response.status === 201) {
+            toast.dismiss();
+            toast.success(response.data.message);
+            return response.data;
+        } else {
+            toast.dismiss();
+            toast.error(response.data.message);
+            throw new Error(response.data.message);
+        }
     } catch (error) {
         toast.dismiss();
         toast.error(error?.response?.data?.message);
+        throw error;
     }
 });
 export const login = createAsyncThunk("/auth/login", async (data) => {
@@ -29,12 +36,19 @@ export const login = createAsyncThunk("/auth/login", async (data) => {
             position: 'top-center'
         });
         const response = await axiosInstance.post('/user/login', data);
-        toast.dismiss();
-        toast.success(response.data.message);
-        return response.data;
+        if (response.status === 200) {
+            toast.dismiss();
+            toast.success(response.data.message);
+            return response.data;
+        } else {
+            toast.dismiss();
+            toast.error(response.data.message);
+            throw new Error(response.data.message);
+        }
     } catch (error) {
         toast.dismiss();
         toast.error(error?.response?.data?.message);
+        throw error;
     }
 });
 
@@ -43,13 +57,20 @@ export const logout = createAsyncThunk("/auth/logout", async () => {
         toast.loading("Wait! logout in progress", {
             position: 'top-center'
         });
-        const response = await axiosInstance.get('/user/login');
-        toast.dismiss();
-        toast.success(response.data.message);
-        return response.data;
+        const response = await axiosInstance.get('/user/logout');
+        if (response.status === 200) {
+            toast.dismiss();
+            toast.success(response.data.message);
+            return response.data;
+        } else {
+            toast.dismiss();
+            toast.error(response.data.message);
+            throw new Error(response.data.message);
+        }
     } catch (error) {
         toast.dismiss();
         toast.error(error?.response?.data?.message);
+        throw error;
     }
 })
 
