@@ -62,7 +62,7 @@
 5. install plugins and dependencies
 
 ```bash
-    npm install react-router-dom  react-icons axios react-redux @reduxjs/toolkit react-chartjs-2 chart.js daisyui react-hot-toast @tailwindcss/line-clamp
+    npm install react-router-dom  react-icons axios react-redux @reduxjs/toolkit react-chartjs-2 chart.js daisyui react-toastify @tailwindcss/line-clamp @emailjs/browser
 ```
 
 6.  Add plugin in `tailwind.config.js`
