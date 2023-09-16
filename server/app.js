@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser'
 import userRoutes from './routes/userRoutes.js'
 import courseRoutes from './routes/courseRoutes.js'
 import paymentRoutes from './routes/paymentRoutes.js'
+import miscRoutes from './routes/miscellaneousRoutes.js'
 import errorMiddleware from './middleware/errorMiddleware.js'
 
 dotenv.config()
@@ -20,6 +21,7 @@ app.use(cors({
 app.use("/api/v1/user", userRoutes)
 app.use("/api/v1/course", courseRoutes)
 app.use("/api/v1/payments", paymentRoutes)
+app.use("/api/v1", miscRoutes)
 
 app.use("/ping", (req, res) => {
     res.send("Server is working")

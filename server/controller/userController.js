@@ -154,7 +154,7 @@ export const forgotPassword = async (req, res, next) => {
 
 
     try {
-        await sendMail(email, subject, message)
+        await sendMail(process.env.GMAIL_ID, email, subject, message)
         res.status(200).json({
             success: true,
             message: `Reset password email has been send to ${email} successfully`
