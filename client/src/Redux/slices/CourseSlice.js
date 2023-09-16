@@ -18,7 +18,7 @@ export const getAllCourse = createAsyncThunk('/course/get', async () => {
         return response.data?.courses
     } catch (error) {
         toast.dismiss();
-        toast.error(error?.response?.data?.message);
+        toast.error(error?.response?.statusText);
     }
 })
 
