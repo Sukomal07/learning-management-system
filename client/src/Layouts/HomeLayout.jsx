@@ -23,7 +23,7 @@ function HomeLayout({ children }) {
     }
     useEffect(() => {
         if (isLoggedIn && (location.pathname === '/login' || location.pathname === '/signup' || location.pathname === '/profile' || location.pathname === '/admin/dashboard')) {
-            navigate('/')
+            navigate(-1)
         }
     }, [isLoggedIn, location.pathname, navigate])
 

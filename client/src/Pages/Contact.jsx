@@ -35,40 +35,29 @@ function Contact() {
             const SERVICE_ID = import.meta.env.VITE_SERVICE_ID;
             const TEMPLATE_ID = import.meta.env.VITE_TEMPLATE_ID;
             const PUBLIC_KEY = import.meta.env.VITE_PUBLIC_KEY;
+            toast.loading("Wait! Sending message...", {
+                position: 'top-center'
+            });
 
-            try {
-                toast.loading("Wait! Sending message...", {
-                    position: 'top-center'
-                });
-
-                emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, form.current, PUBLIC_KEY)
-                    .then(() => {
-                        toast.dismiss();
-                        toast.success("Message sent successfully");
-                        setUserInput({
-                            user_name: "",
-                            user_email: "",
-                            message: ""
-                        });
-                    })
-                    .catch(error => {
-                        toast.dismiss();
-                        toast.error(error.text);
-                        setUserInput({
-                            user_name: "",
-                            user_email: "",
-                            message: ""
-                        });
+            emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, form.current, PUBLIC_KEY)
+                .then(() => {
+                    toast.dismiss();
+                    toast.success("Message sent successfully");
+                    setUserInput({
+                        user_name: "",
+                        user_email: "",
+                        message: ""
                     });
-            } catch (error) {
-                toast.dismiss();
-                toast.error(error.message);
-                setUserInput({
-                    user_name: "",
-                    user_email: "",
-                    message: ""
+                })
+                .catch(error => {
+                    toast.dismiss();
+                    toast.error(error.text);
+                    setUserInput({
+                        user_name: "",
+                        user_email: "",
+                        message: ""
+                    });
                 });
-            }
         }
     }
 
