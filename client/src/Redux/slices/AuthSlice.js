@@ -74,6 +74,52 @@ export const logout = createAsyncThunk("/auth/logout", async () => {
     }
 })
 
+export const forgotPassword = createAsyncThunk("/auth/forgotPassword", async (data) => {
+    try {
+        toast.loading("Wait! sending request...", {
+            position: 'top-center'
+        });
+        const response = await axiosInstance.post('/user/forgot-password', data)
+        if (response.status === 200) {
+            toast.dismiss();
+            toast.success(response.data.message);
+            return response.data;
+        } else {
+            toast.dismiss();
+            toast.error(response.data.message);
+            throw new Error(response.data.message);
+        }
+    } catch (error) {
+        toast.dismiss();
+        toast.error(error?.response?.data?.message);
+        throw error;
+    }
+})
+
+export const resetPassword = createAsyncThunk("/auth/reset", async (data) => {
+    try {
+        toast.loading("Wait! resetting password...", {
+            position: 'top-center'
+        });
+        const response = await axiosInstance.post(`/user/reset/${data.resetToken}`, {
+            password: data.password
+        });
+        if (response.status === 200) {
+            toast.dismiss();
+            toast.success(response.data.message);
+            return response.data;
+        } else {
+            toast.dismiss();
+            toast.error(response.data.message);
+            throw new Error(response.data.message);
+        }
+    } catch (error) {
+        toast.dismiss();
+        toast.error(error?.response?.data?.message);
+        throw error;
+    }
+})
+
 
 const authSlice = createSlice({
     name: 'auth',

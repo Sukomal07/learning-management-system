@@ -10,7 +10,7 @@ router.post("/login", login)
 router.get("/logout", logout)
 router.get("/myprofile", isLoggedIn, getProfile)
 router.post("/forgot-password", forgotPassword)
-router.post("/reset-password", resetPassword)
+router.post("/reset/:resetToken", resetPassword)
 router.post("change-password", isLoggedIn, changePassword)
 router.put("update", isLoggedIn, upload.single("avatar"), updateProfile)
 

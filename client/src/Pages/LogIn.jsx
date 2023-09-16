@@ -6,7 +6,7 @@ import { Link, useNavigate } from "react-router-dom"
 import option2 from '../assets/Json/option2.json'
 import Particle from "../components/Particle"
 import HomeLayout from "../layouts/HomeLayout"
-import { login } from "../redux/slices/AuthSlice"
+import { forgotPassword, login } from "../redux/slices/AuthSlice"
 function LogIn() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -25,6 +25,16 @@ function LogIn() {
         const response = await dispatch(login(logInData))
         if (response.payload?.success) {
             navigate('/');
+            setLogInData({
+                email: "",
+                password: ""
+            })
+        }
+    }
+
+    async function onForgotPassword() {
+        const response = await dispatch(forgotPassword({ email: logInData.email }))
+        if (response.payload?.success) {
             setLogInData({
                 email: "",
                 password: ""
@@ -51,6 +61,7 @@ function LogIn() {
                         <input type="password" name="password" id="password" placeholder='Enter Password' className="py-2 border-0 outline-0 text-xl text-white bg-transparent w-full " value={logInData.password} onChange={handleUserInput} />
                     </div>
                     <button type='submit' className='btn btn-primary w-full  mx-auto'>LogIn</button>
+                    <p onClick={onForgotPassword} className="text-right text-slate-500 text-[1rem] cursor-pointer hover:underline">Forgot Password ?</p>
                 </form>
                 <p className='text-xl text-white'>don't have an account ?  <Link to={'/signup'} className='text-2xl text-blue-500 hover:underline '>Signup</Link> here</p>
             </div>

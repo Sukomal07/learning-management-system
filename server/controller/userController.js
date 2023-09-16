@@ -171,7 +171,7 @@ export const forgotPassword = async (req, res, next) => {
 export const resetPassword = async (req, res, next) => {
     try {
         const { resetToken } = req.params
-        const { password } = re.body
+        const { password } = req.body
 
         const forgotPasswordToken = await crypto.createHash('sha256').update(resetToken).digest('hex')
 
