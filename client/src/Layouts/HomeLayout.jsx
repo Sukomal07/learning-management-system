@@ -22,7 +22,7 @@ function HomeLayout({ children }) {
         }
     }
     useEffect(() => {
-        if (isLoggedIn && (location.pathname === '/login' || location.pathname === '/signup' || location.pathname === '/profile' || location.pathname === '/admin/dashboard')) {
+        if (isLoggedIn && (location.pathname === '/login' || location.pathname === '/signup' || location.pathname === '/profile')) {
             navigate('/')
         }
     }, [isLoggedIn, location.pathname, navigate])
