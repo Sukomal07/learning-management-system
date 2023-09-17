@@ -8,13 +8,14 @@ import { resetPassword } from "../redux/slices/AuthSlice";
 function ForgotPassword() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { token } = useParams();
+    const { resetToken } = useParams();
 
     const [data, setData] = useState({
         password: "",
         cnfPassword: "",
-        resetToken: token
+        resetToken: resetToken
     })
+    console.log(data.resetToken);
     function handleUserInput(e) {
         const { name, value } = e.target
         setData({ ...data, [name]: value })
