@@ -49,7 +49,7 @@ function ForgotPassword() {
         <>
             <div className="flex flex-col gap-10 justify-center items-center mb-1 h-[90vh]">
                 <h1 className="text-4xl text-yellow-500 font-bold">Reset Your Password</h1>
-                <form onSubmit={onSubmit} className="flex flex-col gap-4 rounded-lg bg-white shadow-lg w-1/3 h-fit px-8 py-8">
+                <form onSubmit={onSubmit} className="flex flex-col gap-4 rounded-lg bg-white shadow-lg lg:w-1/3 w-[90%] h-fit px-8 py-8">
                     <div>
                         <label className="text-xl text-black font-semibold" htmlFor="password">New Password</label>
                         <input type="text" name="password" placeholder="New Password" className="input input-bordered input-primary w-full text-white mt-2" value={data.password} onChange={handleUserInput} />

@@ -8,11 +8,10 @@ function CourseCard({ data }) {
             <div className="card-body">
                 <h2 className="card-title capitalize text-xl text-white">
                     {data.title}
-                    <div className="badge badge-secondary">NEW</div>
+                    <span className="badge badge-primary text-xs">NEW</span>
                 </h2>
-                <p className="capitalize">{data.description}</p>
-                <p className="capitalize font-bold">Instructor : {data.createdBy}</p>
-                <p className="capitalize font-bold">Number of Lectures : {data.numberOfLectures}</p>
+                <p className="capitalize font-bold">Instructor : <span className='text-blue-500'>{data.createdBy}</span></p>
+                <p className="capitalize font-bold">Number of Lectures : <span className='text-blue-500'>{data.numberOfLectures}</span></p>
                 <div className="card-actions justify-end">
                     <div className="badge badge-outline capitalize py-4 px-3 border-yellow-400 border-2">{data.category}</div>
                 </div>
