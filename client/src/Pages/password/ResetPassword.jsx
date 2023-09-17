@@ -3,8 +3,8 @@ import { useDispatch } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from "react-toastify";
 
-import Footer from "../components/Footer"
-import { resetPassword } from "../redux/slices/AuthSlice";
+import Footer from "../../components/Footer"
+import { resetPassword } from "../../redux/slices/AuthSlice";
 function ForgotPassword() {
     const dispatch = useDispatch();
     const navigate = useNavigate();

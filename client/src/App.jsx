@@ -1,14 +1,14 @@
 import { Route, Routes } from 'react-router-dom'
 
 import About from './pages/About'
+import LogIn from './pages/auth/LogIn'
+import SignUp from './pages/auth/SignUp'
 import Contact from './pages/Contact'
 import CourseDescription from './pages/course/CourseDescription'
 import CourseList from './pages/course/CourseList'
 import HomePage from './pages/HomePage'
-import LogIn from './pages/LogIn'
 import NotFound from './pages/NotFound'
-import ResetPassword from './pages/ResetPassword'
-import SignUp from './pages/SignUp'
+import ResetPassword from './pages/password/ResetPassword'
 function App() {
   return (
     <>
