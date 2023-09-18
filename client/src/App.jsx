@@ -11,21 +11,30 @@ import CreateCourse from './pages/course/CreateCourse'
 import HomePage from './pages/HomePage'
 import NotFound from './pages/NotFound'
 import ResetPassword from './pages/password/ResetPassword'
+import Profile from './pages/user/Profile'
 function App() {
   return (
     <>
       <Routes>
         <Route path='*' element={<NotFound />} />
+
         <Route path='/' element={<HomePage />} />
+
         <Route path='/signup' element={<SignUp />} />
         <Route path='/login' element={<LogIn />} />
+
+        <Route path='/reset-password/:resetToken' element={<ResetPassword />} />
+
         <Route path='/about' element={<About />} />
+        <Route path='/contact' element={<Contact />} />
+
         <Route path='/courses' element={<CourseList />} />
         <Route path='/course/description' element={<CourseDescription />} />
-        <Route path='/contact' element={<Contact />} />
-        <Route path='/reset-password/:resetToken' element={<ResetPassword />} />
         <Route element={<RequiredAuth allowedRole={["ADMIN"]} />}>
           <Route path='/course/create' element={<CreateCourse />} />
+        </Route>
+        <Route element={<RequiredAuth allowedRole={["ADMIN", "USER"]} />}>
+          <Route path='/profile' element={<Profile />} />
         </Route>
       </Routes>
     </>

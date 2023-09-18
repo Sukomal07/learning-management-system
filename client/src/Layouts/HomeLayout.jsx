@@ -19,7 +19,7 @@ function HomeLayout({ children }) {
         await dispatch(logout())
     }
     useEffect(() => {
-        if (isLoggedIn && (location.pathname === '/login' || location.pathname === '/signup' || location.pathname === '/profile')) {
+        if (isLoggedIn && (location.pathname === '/login' || location.pathname === '/signup')) {
             navigate('/')
         }
     }, [isLoggedIn, location.pathname, navigate])
