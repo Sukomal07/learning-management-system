@@ -28,7 +28,7 @@ export const createCourse = createAsyncThunk('/course/create', async (data) => {
         toast.loading("wait! creating course...", {
             position: 'top-center'
         })
-        const response = await axiosInstance.post('/course/create', data);
+        const response = await axiosInstance.post('/course/newcourse', data);
         if (response.status === 201) {
             toast.dismiss();
             toast.success(response.data.message);
