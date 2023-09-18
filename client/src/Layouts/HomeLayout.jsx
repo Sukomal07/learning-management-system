@@ -16,10 +16,7 @@ function HomeLayout({ children }) {
     const role = useSelector((state) => state?.auth?.role);
 
     async function onLogout() {
-        const response = await dispatch(logout())
-        if (response.payload?.success) {
-            navigate('/')
-        }
+        await dispatch(logout())
     }
     useEffect(() => {
         if (isLoggedIn && (location.pathname === '/login' || location.pathname === '/signup' || location.pathname === '/profile')) {
@@ -38,7 +35,7 @@ function HomeLayout({ children }) {
                 </div>
                 <div className="drawer-side z-10">
                     <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
-                    <ul className="menu p-4 pt-12 gap-12 w-60 lg:w-80 min-h-full bg-base-200 text-base-content text-xl">
+                    <ul className="menu p-4 pt-12 gap-8 w-60 lg:w-80 min-h-full bg-base-200 text-base-content text-xl">
                         {isLoggedIn && role === 'ADMIN' && (
                             <li><Link to={'/admin/dashboard'}>Admin DashBoard</Link></li>
                         )}
