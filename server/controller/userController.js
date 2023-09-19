@@ -233,8 +233,8 @@ export const changePassword = async (req, res, next) => {
 export const updateProfile = async (req, res, next) => {
     try {
         const { name } = req.body
-        const { id } = req.user.id
-        const user = await User.findById({ id })
+        const userId = req.user.id
+        const user = await User.findById(userId)
 
         if (!user) {
             return next(createError(400, "user does not exists"))
@@ -268,6 +268,22 @@ export const updateProfile = async (req, res, next) => {
         res.status(200).json({
             success: true,
             message: "profile updated successfully"
+        })
+    } catch (error) {
+        return next(createError(500, error.message))
+    }
+}
+
+export const deleteProfile = async (req, res, next) => {
+    try {
+        const userId = req.user.id
+        const user = await User.findByIdAndDelete(userId)
+        if (!user) {
+            return next(createError(400, "user does not exists"))
+        }
+        res.status(200).json({
+            success: true,
+            message: "profile deleted successfully"
         })
     } catch (error) {
         return next(createError(500, error.message))
