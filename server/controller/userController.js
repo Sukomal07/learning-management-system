@@ -236,11 +236,14 @@ export const updateProfile = async (req, res, next) => {
         const userId = req.user.id
         const user = await User.findById(userId)
 
+        if (!name) {
+            return next(createError(400, "name is required"))
+        }
         if (!user) {
             return next(createError(400, "user does not exists"))
         }
 
-        if (req.name) {
+        if (name) {
             user.name = name
         }
 
