@@ -14,10 +14,9 @@ function HomeLayout({ children }) {
 
     const isLoggedIn = useSelector((state) => state?.auth?.isLoggedIn);
     const role = useSelector((state) => state?.auth?.role);
-    const avatar = useSelector((state) => state.auth?.data?.avatar?.secure_url)
-    const name = useSelector((state) => state.auth?.data?.name)
+    const avatar = useSelector((state) => state?.auth?.data?.avatar?.secure_url) || 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png'
+    const name = useSelector((state) => state?.auth?.data?.name)
     const firstName = name ? name.split(' ')[0] : '';
-
     async function onLogout() {
         await dispatch(logout())
     }
@@ -39,17 +38,14 @@ function HomeLayout({ children }) {
                 <div className="drawer-side z-10">
                     <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
                     <ul className="menu p-4 pt-12 gap-8 w-60 lg:w-80 min-h-full bg-base-200 text-base-content text-xl">
-                        <div className='rounded-full flex gap-4 items-center px-4 w-full'>
-                            {
-                                avatar !== "http" ? (
+                        {
+                            isLoggedIn && (
+                                <div className='rounded-full flex gap-4 items-center px-4 w-full'>
                                     <img src={avatar} alt="profile photo" className='w-12 h-12 rounded-full' />
-                                ) : (
-                                    <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png" alt="profile photo" className='w-12 h-12 rounded-full' />
-                                )
-                            }
-
-                            <p className='text-yellow-400 italic'>hello <br /> <span className='font-semibold capitalize text-white'>{firstName}</span></p>
-                        </div>
+                                    <p className='text-yellow-400 italic'>hello <br /> <span className='font-semibold capitalize text-white'>{firstName}</span></p>
+                                </div>
+                            )
+                        }
                         {isLoggedIn && role === 'ADMIN' && (
                             <li><Link to={'/admin/dashboard'}>Admin DashBoard</Link></li>
                         )}
