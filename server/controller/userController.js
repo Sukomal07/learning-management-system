@@ -202,7 +202,6 @@ export const changePassword = async (req, res, next) => {
     try {
         const { oldPassword, newPassword } = req.body
         const userId = req.user.id
-        console.log(userId);
         if (!oldPassword || !newPassword) {
             return next(createError(404, "All feilds are required"))
         }
