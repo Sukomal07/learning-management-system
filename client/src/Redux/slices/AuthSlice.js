@@ -116,6 +116,27 @@ export const resetPassword = createAsyncThunk("/user/resetPassword", async (data
         throw error;
     }
 })
+export const changePassword = createAsyncThunk("/user/changePassword", async (data) => {
+    try {
+        toast.loading("Wait! changing password..", {
+            position: 'top-center'
+        });
+        const response = await axiosInstance.put('/user/change-password', data);
+        if (response.status === 200) {
+            toast.dismiss();
+            toast.success(response.data.message);
+            return response.data;
+        } else {
+            toast.dismiss();
+            toast.error(response.data.message);
+            throw new Error(response.data.message);
+        }
+    } catch (error) {
+        toast.dismiss();
+        toast.error(error?.response?.data?.message);
+        throw error;
+    }
+})
 export const editProfile = createAsyncThunk("/user/editProfile", async (data) => {
     try {
         toast.loading("Wait! update profile", {

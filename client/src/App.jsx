@@ -10,6 +10,7 @@ import CourseList from './pages/course/CourseList'
 import CreateCourse from './pages/course/CreateCourse'
 import HomePage from './pages/HomePage'
 import NotFound from './pages/NotFound'
+import ChangePassword from './pages/password/ChangePassword'
 import ResetPassword from './pages/password/ResetPassword'
 import Profile from './pages/user/Profile'
 function App() {
@@ -35,6 +36,7 @@ function App() {
         </Route>
         <Route element={<RequiredAuth allowedRole={["ADMIN", "USER"]} />}>
           <Route path='/profile' element={<Profile />} />
+          <Route path='/profile/changePassword' element={<ChangePassword />} />
         </Route>
       </Routes>
     </>

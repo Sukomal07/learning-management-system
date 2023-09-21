@@ -57,7 +57,7 @@ function LogIn() {
                         <input type="email" name="email" id="email" placeholder='Enter Email' className="py-2 border-0 outline-0 text-xl text-white bg-transparent w-full " value={logInData.email} onChange={handleUserInput} />
                     </div>
                     <div className='flex items-center w-full gap-4 border-2 border-yellow-500 px-4 rounded-lg h-14 bg-slate-900'>
-                        <label htmlFor="password" className='text-sm hidden lg:block md:block text-yellow-500'><BsLock /></label>
+                        <label htmlFor="password" className='text-xl hidden lg:block md:block text-yellow-500'><BsLock /></label>
                         <input type="password" name="password" id="password" placeholder='Enter Password' className="py-2 border-0 outline-0 text-xl text-white bg-transparent w-full " value={logInData.password} onChange={handleUserInput} />
                     </div>
                     <button type='submit' className='btn btn-primary w-full  mx-auto'>LogIn</button>

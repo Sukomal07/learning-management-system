@@ -11,7 +11,7 @@ function Profile() {
     const navigate = useNavigate();
     const userData = useSelector((state) => state.auth?.data)
     const [data, setData] = useState({
-        previewImage: userData.avatar?.secure_url,
+        previewImage: userData.avatar?.secure_url || 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png',
         name: userData.name,
         avatar: undefined,
         userId: userData._id,
@@ -65,20 +65,8 @@ function Profile() {
                     <div className='flex items-center justify-center w-full'>
 
                         <div className='relative'>
-                            {
-                                data.previewImage !== "http" ? <>
-                                    <img src={data.previewImage} alt="profile photo" className="rounded-full w-32 h-32" />
-                                    <input
-                                        type="file"
-                                        id="imageUpload"
-                                        accept='.jpg, .jpeg, .png, .svg'
-                                        className='hidden'
-                                        onChange={handleImage}
-                                    />
-                                </> : (
-                                    <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png" alt="profile photo" className="rounded-full w-32 h-32" />
-                                )
-                            }
+                            <img src={data.previewImage} alt="profile photo" className="rounded-full w-32 h-32" />
+                            <input type="file" id="imageUpload" accept='.jpg, .jpeg, .png, .svg' className='hidden' onChange={handleImage} />
                             <label htmlFor="imageUpload" className='absolute bottom-2 right-0 rounded-full bg-slate-200 w-7 h-7 flex items-center justify-center cursor-pointer'>
                                 <FiEdit size={'18px'} color='black' />
                             </label>
