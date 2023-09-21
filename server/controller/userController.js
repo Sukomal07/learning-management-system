@@ -201,23 +201,32 @@ export const resetPassword = async (req, res, next) => {
 export const changePassword = async (req, res, next) => {
     try {
         const { oldPassword, newPassword } = req.body
-        const { id } = req.user
-
+        const userId = req.user.id
+        console.log(userId);
         if (!oldPassword || !newPassword) {
             return next(createError(404, "All feilds are required"))
         }
 
-        const user = await User.findOne({ id }).select('+password')
+        const user = await User.findById(userId).select('+password')
         if (!user) {
             return next(createError(400, "user does not exists"))
         }
 
-        const comparePassword = await bcryptjs.compare(oldPassword, newPassword)
+        const comparePassword = await bcryptjs.compare(oldPassword, user.password)
         if (!comparePassword) {
             return next(createError(401, "Invalid old password"))
         }
 
         user.password = newPassword
+        try {
+            await user.validate();
+        } catch (error) {
+            const validationErrors = [];
+            for (const key in error.errors) {
+                validationErrors.push(error.errors[key].message);
+            }
+            return res.status(400).json({ success: false, message: validationErrors.join(', ') });
+        }
         await user.save()
 
         user.password = undefined
