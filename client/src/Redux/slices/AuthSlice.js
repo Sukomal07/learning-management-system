@@ -51,7 +51,6 @@ export const login = createAsyncThunk("/auth/login", async (data) => {
         throw error;
     }
 });
-
 export const logout = createAsyncThunk("/auth/logout", async () => {
     try {
         toast.loading("Wait! logout in progress", {
@@ -73,8 +72,7 @@ export const logout = createAsyncThunk("/auth/logout", async () => {
         throw error;
     }
 })
-
-export const forgotPassword = createAsyncThunk("/auth/forgotPassword", async (data) => {
+export const forgotPassword = createAsyncThunk("/user/forgotPassword", async (data) => {
     try {
         toast.loading("Wait! sending request...", {
             position: 'top-center'
@@ -95,8 +93,7 @@ export const forgotPassword = createAsyncThunk("/auth/forgotPassword", async (da
         throw error;
     }
 })
-
-export const resetPassword = createAsyncThunk("/auth/reset", async (data) => {
+export const resetPassword = createAsyncThunk("/user/resetPassword", async (data) => {
     try {
         toast.loading("Wait! resetting password...", {
             position: 'top-center'
@@ -119,7 +116,6 @@ export const resetPassword = createAsyncThunk("/auth/reset", async (data) => {
         throw error;
     }
 })
-
 export const editProfile = createAsyncThunk("/user/editProfile", async (data) => {
     try {
         toast.loading("Wait! update profile", {

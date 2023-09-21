@@ -70,7 +70,7 @@ function SignUp() {
                         <p className='text-slate-400'>Please fill this form to create an account</p>
                     </div>
                     <hr className='border-t-2 border-slate-500' />
-                    <div className='flex items-center w-full gap-10 '>
+                    <div className='flex items-center w-full gap-4 '>
                         {
                             viewImage ? (
                                 <img src={viewImage} alt="photo" className='rounded-[50%] w-14 h-14 hidden lg:block' />
