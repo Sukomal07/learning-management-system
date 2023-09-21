@@ -26,7 +26,8 @@ export const buySubscription = async (req, res, next) => {
 
         const subscription = await razorpay.subscriptions.create({
             plan_id: process.env.RAZORPAY_PLAN_ID,
-            customer_notify: 1
+            customer_notify: 1,
+            total_count: 12
         })
 
         user.subscription.id = subscription.id
@@ -94,6 +95,27 @@ export const cancelSubscription = async (req, res, next) => {
 
         user.subscription.status = subscription.status
         await user.save()
+
+        const payment = await Payment.findOne({
+            subscription_id: subscriptionId
+        })
+
+        const timeSinceSubscribed = Date.now() - payment.createdAt;
+        const refundPeriod = 14 * 24 * 60 * 60 * 1000;
+
+        if (refundPeriod <= timeSinceSubscribed) {
+            return next(createError(400, "Refund period is over, so there will not be any refunds provided"))
+        }
+
+        await razorpay.payments.refund(payment.payment_id, {
+            speed: 'optimum'
+        })
+        user.subscription.id = undefined
+        user.subscription.status = undefined
+
+        await user.save()
+        await payment.remove()
+
         res.status(200).json({
             success: true,
             message: "subscription cancel successfull"
@@ -104,24 +126,69 @@ export const cancelSubscription = async (req, res, next) => {
 }
 export const allPayments = async (req, res, next) => {
     try {
-        const { count } = req.user;
-        const subscriptions = await razorpay.subscriptions.all({
-            count: count || 10
+        const { count, skip } = req.query;
+        const allPayments = await razorpay.subscriptions.all({
+            count: count ? count : 10,
+            skip: skip ? skip : 0
         });
-        const currentDate = new Date();
-        const currentMonthSubscriptions = subscriptions.filter(subscription => {
-            const subscriptionStartDate = new Date(subscription.startDate);
-            return subscriptionStartDate.getMonth() === currentDate.getMonth() &&
-                subscriptionStartDate.getFullYear() === currentDate.getFullYear();
+
+        const monthNames = [
+            'January',
+            'February',
+            'March',
+            'April',
+            'May',
+            'June',
+            'July',
+            'August',
+            'September',
+            'October',
+            'November',
+            'December',
+        ];
+
+        const finalMonths = {
+            January: 0,
+            February: 0,
+            March: 0,
+            April: 0,
+            May: 0,
+            June: 0,
+            July: 0,
+            August: 0,
+            September: 0,
+            October: 0,
+            November: 0,
+            December: 0,
+        };
+
+        const monthlyWisePayments = allPayments.items.map((payment) => {
+
+            const monthsInNumbers = new Date(payment.start_at * 1000);
+
+            return monthNames[monthsInNumbers.getMonth()];
+        });
+
+        monthlyWisePayments.map((month) => {
+            Object.keys(finalMonths).forEach((objMonth) => {
+                if (month === objMonth) {
+                    finalMonths[month] += 1;
+                }
+            });
+        });
+
+        const monthlySalesRecord = [];
+
+        Object.keys(finalMonths).forEach((monthName) => {
+            monthlySalesRecord.push(finalMonths[monthName]);
         });
 
         res.status(200).json({
             success: true,
-            message: "All payments and monthly payments",
-            allPayments: subscriptions,
-            monthlyPayments: currentMonthSubscriptions,
-            currentMonth: currentDate.toLocaleString('default', { month: 'long' }),
-            currentYear: currentDate.getFullYear()
+            message: 'All payments',
+            allPayments,
+            finalMonths,
+            monthlySalesRecord,
         });
     } catch (error) {
         return next(createError(500, error.message));

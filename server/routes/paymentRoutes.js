@@ -8,7 +8,7 @@ router.get('/', isLoggedIn, authorizedRole('ADMIN'), allPayments)
 router.get('/key', isLoggedIn, getRazorpayKey)
 router.post('/subscribe', isLoggedIn, buySubscription)
 router.post('/verify', isLoggedIn, verifySubscription)
-router.post('unsubscribe', isLoggedIn, cancelSubscription)
+router.post('/unsubscribe', isLoggedIn, cancelSubscription)
 
 
 export default router
