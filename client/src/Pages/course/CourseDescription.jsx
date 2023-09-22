@@ -16,7 +16,7 @@ function CourseDescription() {
                     <p className="font-semibold lg:text-2xl text-xl text-yellow-400 capitalize">Instructor : <span className="text-xl text-blue-500">{state.createdBy}</span></p>
                     <p className="font-semibold lg:text-2xl text-xl text-yellow-400 capitalize">Number of lectures : <span className="text-xl text-blue-500">{state.numberOfLectures}</span></p>
                     {
-                        role === 'ADMIN' || data?.subscription?.status === 'ACTIVE' ? (
+                        role === 'ADMIN' || data?.subscription?.status === 'active' ? (
                             <button className="btn btn-primary">Go to Lectures</button>
 
                         ) : (

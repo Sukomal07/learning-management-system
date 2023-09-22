@@ -105,7 +105,7 @@ function Profile() {
                             Delete Account
                         </button>
                     </div>
-                    {userData.subscription?.state === "active" ? (
+                    {userData.subscription?.status === "active" ? (
                         <button className='btn btn-error text-white w-full'>Cancel Subscription</button>
                     ) : null
                     }

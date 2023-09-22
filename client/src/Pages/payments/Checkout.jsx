@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import HomeLayout from '../../layouts/HomeLayout'
+import { getProfile } from '../../redux/slices/AuthSlice';
 import { getRazorpayKey, purchaseCourseBundle, verifyUserPayment } from '../../redux/slices/RazorpaySlice';
 
 
@@ -36,19 +37,14 @@ function Checkout() {
                 name: userdata.name
             },
             handler: async function (response) {
-                paymentDetails.payment_id = response.payment_id
-                paymentDetails.subscription_id = response.subscription_id
+                paymentDetails.payment_id = response.razorpay_payment_id
+                paymentDetails.subscription_id = response.razorpay_subscription_id
                 paymentDetails.razorpay_signature = response.razorpay_signature
-
-                toast.success("Payment Successful")
-                try {
-                    const res = await dispatch(verifyUserPayment(paymentDetails));
-                    if (res?.payload?.success) {
-                        navigate('/checkout/success');
-                    } else {
-                        navigate('/checkout/fail');
-                    }
-                } catch (error) {
+                const res = await dispatch(verifyUserPayment(paymentDetails));
+                if (res?.payload?.success) {
+                    await dispatch(getProfile())
+                    navigate('/checkout/success');
+                } else {
                     navigate('/checkout/fail');
                 }
             }
@@ -67,8 +63,8 @@ function Checkout() {
     }, [])
     return (
         <HomeLayout>
-            <div className='h-screen flex justify-center items-center'>
-                <div className='w-1/3 m-auto bg-white rounded-lg shadow-lg flex flex-col gap-4 justify-center items-center pb-4'>
+            <div className='lg:h-screen flex justify-center items-center mb-6 lg:mb-0'>
+                <div className='lg:w-1/3 w-11/12 m-auto bg-white rounded-lg shadow-lg flex flex-col gap-4 justify-center items-center pb-4'>
                     <h1 className='bg-yellow-500 text-black font-bold text-3xl w-full text-center py-3 rounded-t-lg'>Subscription Bundle</h1>
                     <p className='px-4 text-xl tracking-wider text-slate-500 text-center'>This purchase will allow you to access all available course of our platform for <span className='text-2xl text-blue-500 font-bold'>1 year duration.</span></p>
                     <p className='px-5 text-xl tracking-wider text-yellow-500 text-center font-semibold'>All the existing and new launched courses will be available </p>
