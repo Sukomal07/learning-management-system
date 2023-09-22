@@ -14,7 +14,7 @@ function HomeLayout({ children }) {
 
     const isLoggedIn = useSelector((state) => state?.auth?.isLoggedIn);
     const role = useSelector((state) => state?.auth?.role);
-    const avatar = useSelector((state) => state?.auth?.data?.avatar?.secure_url) || 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png'
+    const avatar = useSelector((state) => state?.auth?.data?.avatar?.secure_url)
     const name = useSelector((state) => state?.auth?.data?.name)
     const firstName = name ? name.split(' ')[0] : '';
     async function onLogout() {

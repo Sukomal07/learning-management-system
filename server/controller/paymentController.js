@@ -57,7 +57,6 @@ export const verifySubscription = async (req, res, next) => {
         const subscriptionId = user.subscription.id
         const generateSignature = crypto.createHmac('sha256', process.env.RAZORPAY_API_SECRET).update(`${payment_id}|${subscriptionId}`)
             .digest('hex')
-
         if (generateSignature !== razorpay_signature) {
             return next(createError(400, "payment not verified , please try again"))
         }

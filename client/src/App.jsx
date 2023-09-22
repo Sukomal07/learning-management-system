@@ -12,6 +12,7 @@ import HomePage from './pages/HomePage'
 import NotFound from './pages/NotFound'
 import ChangePassword from './pages/password/ChangePassword'
 import ResetPassword from './pages/password/ResetPassword'
+import Checkout from './pages/payments/Checkout'
 import Profile from './pages/user/Profile'
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
         <Route element={<RequiredAuth allowedRole={["ADMIN", "USER"]} />}>
           <Route path='/profile' element={<Profile />} />
           <Route path='/profile/changePassword' element={<ChangePassword />} />
+          <Route path='/checkout' element={<Checkout />} />
         </Route>
       </Routes>
     </>
