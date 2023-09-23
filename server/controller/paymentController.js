@@ -63,7 +63,7 @@ export const verifySubscription = async (req, res, next) => {
 
         await Payment.create({
             payment_id,
-            subscription_id,
+            subscription_id: subscriptionId,
             razorpay_signature
         })
 
@@ -113,7 +113,7 @@ export const cancelSubscription = async (req, res, next) => {
         user.subscription.status = undefined
 
         await user.save()
-        await payment.remove()
+        await payment.deleteOne()
 
         res.status(200).json({
             success: true,
