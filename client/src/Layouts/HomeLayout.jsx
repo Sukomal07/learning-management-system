@@ -1,7 +1,6 @@
-import { useEffect } from 'react';
 import { FiMenu } from 'react-icons/fi'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import Footer from '../components/Footer'
 import { logout } from '../redux/slices/AuthSlice';
@@ -9,8 +8,6 @@ import { logout } from '../redux/slices/AuthSlice';
 function HomeLayout({ children }) {
 
     const dispatch = useDispatch();
-    const navigate = useNavigate();
-    const location = useLocation();
 
     const isLoggedIn = useSelector((state) => state?.auth?.isLoggedIn);
     const role = useSelector((state) => state?.auth?.role);
@@ -20,11 +17,6 @@ function HomeLayout({ children }) {
     async function onLogout() {
         await dispatch(logout())
     }
-    useEffect(() => {
-        if (isLoggedIn && (location.pathname === '/login' || location.pathname === '/signup')) {
-            navigate('/')
-        }
-    }, [isLoggedIn, location.pathname, navigate])
 
     return (
         <div className='relative'>

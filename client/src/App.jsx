@@ -1,4 +1,6 @@
-import { Route, Routes } from 'react-router-dom'
+import { useEffect } from 'react'
+import { useSelector } from 'react-redux'
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 
 import About from './pages/About'
 import LogIn from './pages/auth/LogIn'
@@ -13,8 +15,19 @@ import NotFound from './pages/NotFound'
 import ChangePassword from './pages/password/ChangePassword'
 import ResetPassword from './pages/password/ResetPassword'
 import Checkout from './pages/payments/Checkout'
+import CheckoutSuccess from './pages/payments/CheckoutSuccess'
 import Profile from './pages/user/Profile'
 function App() {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const isLoggedIn = useSelector((state) => state.auth?.isLoggedIn);
+
+  useEffect(() => {
+    if (isLoggedIn && (location.pathname === '/login' || location.pathname === '/signup')) {
+      navigate('/')
+    }
+  }, [isLoggedIn, location.pathname, navigate])
   return (
     <>
       <Routes>
@@ -39,6 +52,7 @@ function App() {
           <Route path='/profile' element={<Profile />} />
           <Route path='/profile/changePassword' element={<ChangePassword />} />
           <Route path='/checkout' element={<Checkout />} />
+          <Route path='/checkout/success' element={<CheckoutSuccess />} />
         </Route>
       </Routes>
     </>
