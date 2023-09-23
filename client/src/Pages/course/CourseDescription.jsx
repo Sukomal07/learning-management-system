@@ -38,7 +38,7 @@ function CourseDescription() {
                 <div className="lg:w-1/2 w-full px-12 py-12 flex flex-col gap-4 relative">
                     {
                         role === 'ADMIN' && (
-                            <div className="flex items-center gap-6 absolute right-2 top-0">
+                            <div className="flex items-center gap-6 absolute lg:right-2 bottom-0 ">
                                 <button className="flex items-center text-red-500 gap-2 font-semibold hover:text-red-700" onClick={onDelete}><FiTrash2 /> Delete Course</button>
                                 <button className="flex items-center text-blue-500 gap-2 font-semibold hover:text-blue-700"><FiEdit /> Edit Course</button>
                             </div>

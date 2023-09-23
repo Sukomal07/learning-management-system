@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { FiPlus } from 'react-icons/fi';
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom';
 
@@ -25,8 +26,8 @@ function CourseList() {
             <div className='flex flex-col lg:pt-20 md:pt-10 lg:px-20 px-4 gap-14'>
                 {
                     isLoggedIn && role === "ADMIN" ? (
-                        <Link to={'/course/create'} className='absolute lg:right-20 right-8 top-4'>
-                            <button className='btn-primary btn normal-case'><span className='text-3xl text-yellow-500'>+</span>create a new course</button>
+                        <Link to={'/course/create'} className='absolute lg:right-20 right-8 top-6'>
+                            <button className='flex items-center gap-2 text-green-500 hover:text-green-700 font-semibold text-2xl'><FiPlus /> Create new course</button>
                         </Link>
                     ) : <></>
                 }
