@@ -15,6 +15,7 @@ import NotFound from './pages/NotFound'
 import ChangePassword from './pages/password/ChangePassword'
 import ResetPassword from './pages/password/ResetPassword'
 import Checkout from './pages/payments/Checkout'
+import CheckoutFail from './pages/payments/CheckoutFail'
 import CheckoutSuccess from './pages/payments/CheckoutSuccess'
 import Profile from './pages/user/Profile'
 function App() {
@@ -22,12 +23,19 @@ function App() {
   const location = useLocation();
 
   const isLoggedIn = useSelector((state) => state.auth?.isLoggedIn);
+  const subscription = useSelector((state) => state.auth?.data?.subscription?.status);
 
   useEffect(() => {
     if (isLoggedIn && (location.pathname === '/login' || location.pathname === '/signup')) {
       navigate('/')
     }
-  }, [isLoggedIn, location.pathname, navigate])
+    setTimeout(() => {
+      if (subscription === 'active' && location.pathname.startsWith('/checkout')) {
+        navigate('/')
+      }
+    }, 5000)
+
+  }, [subscription, isLoggedIn, location.pathname, navigate])
   return (
     <>
       <Routes>
@@ -53,6 +61,7 @@ function App() {
           <Route path='/profile/changePassword' element={<ChangePassword />} />
           <Route path='/checkout' element={<Checkout />} />
           <Route path='/checkout/success' element={<CheckoutSuccess />} />
+          <Route path='/checkout/fail' element={<CheckoutFail />} />
         </Route>
       </Routes>
     </>

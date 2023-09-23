@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom'
 
 import HomeLayout from '../../layouts/HomeLayout'
 import { deleteProfile, editProfile, getProfile } from '../../redux/slices/AuthSlice';
+import { cancelSubscription } from '../../redux/slices/RazorpaySlice';
 
 function Profile() {
     const dispatch = useDispatch();
@@ -57,6 +58,14 @@ function Profile() {
             navigate('/signup')
         }
     }
+    async function handleCancel(e) {
+        e.preventDefault();
+        const res = await dispatch(cancelSubscription())
+        if (res?.payload?.success) {
+            await dispatch(getProfile())
+            navigate('/')
+        }
+    }
 
     return (
         <HomeLayout>
@@ -106,7 +115,7 @@ function Profile() {
                         </button>
                     </div>
                     {userData.subscription?.status === "active" ? (
-                        <button className='btn btn-error text-white w-full'>Cancel Subscription</button>
+                        <button onClick={handleCancel} className='btn btn-error text-white w-full'>Cancel Subscription</button>
                     ) : null
                     }
                 </form>

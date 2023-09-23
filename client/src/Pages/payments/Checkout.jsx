@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import HomeLayout from '../../layouts/HomeLayout'
-import { getProfile } from '../../redux/slices/AuthSlice';
 import { getRazorpayKey, purchaseCourseBundle, verifyUserPayment } from '../../redux/slices/RazorpaySlice';
 
 
@@ -42,7 +41,6 @@ function Checkout() {
                 paymentDetails.razorpay_signature = response.razorpay_signature
                 const res = await dispatch(verifyUserPayment(paymentDetails));
                 if (res?.payload?.success) {
-                    await dispatch(getProfile())
                     navigate('/checkout/success');
                 } else {
                     navigate('/checkout/fail');

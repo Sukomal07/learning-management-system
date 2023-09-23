@@ -119,6 +119,10 @@ const razorpaySlice = createSlice({
             state.finalMonths = action?.payload?.finalMonths
             state.monthlySalesRecord = action?.payload?.monthlySalesRecord
         })
+        builder.addCase(cancelSubscription.fulfilled, (state, action) => {
+            localStorage.setItem("isBuySubscription", action?.payload.success)
+            state.isBuySubscription = action?.payload?.success
+        })
     }
 })
 
