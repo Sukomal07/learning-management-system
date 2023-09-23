@@ -63,7 +63,7 @@ export const verifySubscription = async (req, res, next) => {
 
         await Payment.create({
             payment_id,
-            subscription_id: subscriptionId,
+            subscription_id,
             razorpay_signature
         })
 
@@ -80,49 +80,71 @@ export const verifySubscription = async (req, res, next) => {
 }
 export const cancelSubscription = async (req, res, next) => {
     try {
-        const { id } = req.user
-        const user = await User.findById(id)
+        const { id } = req.user;
+        const user = await User.findById(id);
+
         if (!user) {
-            return next(createError(400, "Please log in again"))
+            return next(createError(400, "Please log in again"));
         }
+
         if (user.role === 'ADMIN') {
-            return next(createError(400, "You are not allowed to do this"))
+            return next(createError(400, "You are not allowed to do this"));
         }
 
-        const subscriptionId = user.subscription.id
-        const subscription = await razorpay.subscriptions.cancel(subscriptionId)
+        const subscriptionId = user.subscription.id;
 
-        user.subscription.status = subscription.status
-        await user.save()
+        // Cancel the subscription using Razorpay
+        const subscription = await razorpay.subscriptions.cancel(subscriptionId);
 
+        // Update the user's subscription status
+        user.subscription.status = subscription.status;
+        await user.save();
+
+        // Find the payment associated with the subscription
         const payment = await Payment.findOne({
             subscription_id: subscriptionId
-        })
+        });
 
-        const timeSinceSubscribed = Date.now() - payment.createdAt;
+        // Calculate the time since subscription in milliseconds
+        const timeSinceSubscribed = Date.now() - new Date(payment.createdAt).getTime();
+
+        // Define the refund period in milliseconds (14 days)
         const refundPeriod = 14 * 24 * 60 * 60 * 1000;
 
-        if (refundPeriod <= timeSinceSubscribed) {
-            return next(createError(400, "Refund period is over, so there will not be any refunds provided"))
+        // Check if the refund period is still valid
+        if (timeSinceSubscribed <= refundPeriod) {
+            try {
+                // Attempt to refund the payment using Razorpay
+                const refund = await razorpay.payments.refund(payment.payment_id, {
+                    speed: 'optimum'
+                });
+
+                // Handle the refund status here, check if it was successful
+                if (refund.status === 'processed') {
+                    // Refund successful, update user's subscription status and delete payment record
+                    user.subscription.id = undefined;
+                    user.subscription.status = undefined;
+                    await user.save();
+                    await payment.deleteOne();
+                } else {
+                    return next(createError(500, "Refund processing failed"));
+                }
+            } catch (refundError) {
+                return next(createError(500, "Error refunding payment: " + refundError.message));
+            }
+        } else {
+            return next(createError(400, "Refund period is over, so there will not be any refunds provided"));
         }
-
-        await razorpay.payments.refund(payment.payment_id, {
-            speed: 'optimum'
-        })
-        user.subscription.id = undefined
-        user.subscription.status = undefined
-
-        await user.save()
-        await payment.deleteOne()
 
         res.status(200).json({
             success: true,
-            message: "subscription cancel successfull"
-        })
+            message: "Subscription canceled successfully"
+        });
     } catch (error) {
-        return next(createError(500, error.message))
+        return next(createError(500, error.message));
     }
 }
+
 export const allPayments = async (req, res, next) => {
     try {
         const { count, skip } = req.query;
