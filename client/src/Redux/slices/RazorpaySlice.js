@@ -7,7 +7,6 @@ import axiosInstance from '../../helpers/AxiosInstance'
 const initialState = {
     key: "",
     subscription_id: "",
-    isBuySubscription: localStorage.getItem("isBuySubscription") || false,
     allPayments: {},
     finalMonths: {},
     monthlySalesRecord: []
@@ -104,24 +103,16 @@ const razorpaySlice = createSlice({
         builder.addCase(purchaseCourseBundle.fulfilled, (state, action) => {
             state.subscription_id = action?.payload?.subscription_id
         })
-        builder.addCase(verifyUserPayment.fulfilled, (state, action) => {
+        builder.addCase(verifyUserPayment.fulfilled, (action) => {
             toast.success(action?.payload?.message);
-            localStorage.setItem("isBuySubscription", action?.payload.success)
-            state.isBuySubscription = action?.payload?.success
         })
-        builder.addCase(verifyUserPayment.rejected, (state, action) => {
+        builder.addCase(verifyUserPayment.rejected, (action) => {
             toast.error(action?.payload?.message)
-            localStorage.setItem("isBuySubscription", action?.payload.success)
-            state.isBuySubscription = action?.payload?.success
         })
         builder.addCase(getPaymentsRecord.fulfilled, (state, action) => {
             state.allPayments = action?.payload?.allPayments
             state.finalMonths = action?.payload?.finalMonths
             state.monthlySalesRecord = action?.payload?.monthlySalesRecord
-        })
-        builder.addCase(cancelSubscription.fulfilled, (state, action) => {
-            localStorage.setItem("isBuySubscription", action?.payload.success)
-            state.isBuySubscription = action?.payload?.success
         })
     }
 })
