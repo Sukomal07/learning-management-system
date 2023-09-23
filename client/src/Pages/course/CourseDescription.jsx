@@ -40,7 +40,7 @@ function CourseDescription() {
                         role === 'ADMIN' && (
                             <div className="flex items-center gap-6 absolute lg:right-2 bottom-0 ">
                                 <button className="flex items-center text-red-500 gap-2 font-semibold hover:text-red-700" onClick={onDelete}><FiTrash2 /> Delete Course</button>
-                                <button className="flex items-center text-blue-500 gap-2 font-semibold hover:text-blue-700"><FiEdit /> Edit Course</button>
+                                <button onClick={() => navigate(`/course/editCourse/${state._id}`, { state: state })} className="flex items-center text-blue-500 gap-2 font-semibold hover:text-blue-700"><FiEdit /> Edit Course</button>
                             </div>
                         )
                     }
