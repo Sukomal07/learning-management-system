@@ -10,6 +10,7 @@ import Contact from './pages/Contact'
 import CourseDescription from './pages/course/CourseDescription'
 import CourseList from './pages/course/CourseList'
 import CreateCourse from './pages/course/CreateCourse'
+import EditCourse from './pages/course/EditCourse'
 import HomePage from './pages/HomePage'
 import NotFound from './pages/NotFound'
 import ChangePassword from './pages/password/ChangePassword'
@@ -55,6 +56,7 @@ function App() {
         <Route path='/course/description' element={<CourseDescription />} />
         <Route element={<RequiredAuth allowedRole={["ADMIN"]} />}>
           <Route path='/course/create' element={<CreateCourse />} />
+          <Route path='/course/editCourse/:id' element={<EditCourse />} />
         </Route>
         <Route element={<RequiredAuth allowedRole={["ADMIN", "USER"]} />}>
           <Route path='/profile' element={<Profile />} />
