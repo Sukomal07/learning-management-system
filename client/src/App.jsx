@@ -11,6 +11,7 @@ import CourseDescription from './pages/course/CourseDescription'
 import CourseList from './pages/course/CourseList'
 import CreateCourse from './pages/course/CreateCourse'
 import EditCourse from './pages/course/EditCourse'
+import CourseLectures from './pages/dashboard/CourseLectures'
 import HomePage from './pages/HomePage'
 import NotFound from './pages/NotFound'
 import ChangePassword from './pages/password/ChangePassword'
@@ -24,19 +25,12 @@ function App() {
   const location = useLocation();
 
   const isLoggedIn = useSelector((state) => state.auth?.isLoggedIn);
-  const subscription = useSelector((state) => state.auth?.data?.subscription?.status);
 
   useEffect(() => {
     if (isLoggedIn && (location.pathname === '/login' || location.pathname === '/signup')) {
       navigate('/')
     }
-    setTimeout(() => {
-      if (subscription === 'active' && location.pathname.startsWith('/checkout')) {
-        navigate('/')
-      }
-    }, 5000)
-
-  }, [subscription, isLoggedIn, location.pathname, navigate])
+  }, [isLoggedIn, location.pathname, navigate])
   return (
     <>
       <Routes>
@@ -61,9 +55,10 @@ function App() {
         <Route element={<RequiredAuth allowedRole={["ADMIN", "USER"]} />}>
           <Route path='/profile' element={<Profile />} />
           <Route path='/profile/changePassword' element={<ChangePassword />} />
-          <Route path='/checkout' element={<Checkout />} />
-          <Route path='/checkout/success' element={<CheckoutSuccess />} />
-          <Route path='/checkout/fail' element={<CheckoutFail />} />
+          <Route path='/course/:name/checkout' element={<Checkout />} />
+          <Route path='/course/:name/checkout/success' element={<CheckoutSuccess />} />
+          <Route path='/course/:name/checkout/fail' element={<CheckoutFail />} />
+          <Route path='/course/:name/lectures/:id' element={<CourseLectures />} />
         </Route>
       </Routes>
     </>

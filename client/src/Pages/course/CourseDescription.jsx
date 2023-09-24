@@ -26,11 +26,11 @@ function CourseDescription() {
                     <p className="font-semibold lg:text-2xl text-xl text-yellow-400 capitalize">Number of lectures : <span className="text-xl text-blue-500">{state.numberOfLectures}</span></p>
                     {
                         role === 'ADMIN' || data?.subscription?.status === 'active' ? (
-                            <button className="btn btn-primary">Go to Lectures</button>
+                            <button className="btn btn-primary capitalize" onClick={() => navigate(`/course/${state.title}/lectures/${state._id}`, { state: state })}>Go to Lectures</button>
 
                         ) : (
 
-                            <button className="btn btn-primary" onClick={() => navigate("/checkout")}>Subscribe</button>
+                            <button className="btn btn-primary capitalize" onClick={() => navigate(`/course/${state.title}/checkout`, { state: state })}>Subscribe</button>
 
                         )
                     }

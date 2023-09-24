@@ -1,17 +1,22 @@
 import { useEffect } from 'react';
 import Lottie from 'react-lottie'
 import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 
 import animationData from '../../lotties/payment-successful.json'
 import { getProfile } from '../../redux/slices/AuthSlice';
 
 function CheckoutSuccess() {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const { state } = useLocation();
     async function onLoad() {
         await dispatch(getProfile())
     }
     useEffect(() => {
+        if (!state) {
+            navigate("/")
+        }
         onLoad()
     }, [])
 
