@@ -24,22 +24,32 @@ export const buySubscription = async (req, res, next) => {
             return next(createError(400, "Admin cannot purchase a subscription"))
         }
 
-        const subscription = await razorpay.subscriptions.create({
-            plan_id: process.env.RAZORPAY_PLAN_ID,
-            customer_notify: 1,
-            total_count: 12
-        })
+        if (user.subscription.id && user.subscription.status === 'created') {
+            await user.save()
 
-        user.subscription.id = subscription.id
-        user.subscription.status = subscription.status
+            res.status(200).json({
+                success: true,
+                message: "subscribed successfully",
+                subscription_id: user.subscription.id
+            })
+        } else {
+            const subscription = await razorpay.subscriptions.create({
+                plan_id: process.env.RAZORPAY_PLAN_ID,
+                customer_notify: 1,
+                total_count: 12
+            })
 
-        await user.save()
+            user.subscription.id = subscription.id
+            user.subscription.status = subscription.status
 
-        res.status(200).json({
-            success: true,
-            message: "subscribed successfully",
-            subscription_id: subscription.id
-        })
+            await user.save()
+
+            res.status(200).json({
+                success: true,
+                message: "subscribed successfully",
+                subscription_id: subscription.id
+            })
+        }
     } catch (error) {
         return next(createError(500, error.message))
     }
