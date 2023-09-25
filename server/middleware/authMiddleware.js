@@ -1,5 +1,6 @@
 import createError from "../utils/error.js"
 import JWT from 'jsonwebtoken'
+import User from '../models/userModel.js'
 
 export const isLoggedIn = async (req, res, next) => {
     const { token } = req.cookies
@@ -22,9 +23,11 @@ export const authorizedRole = (...rols) => async (req, res, next) => {
 }
 
 export const verifySubscription = async (req, res, next) => {
-    const subscription = req.user.subscription
-    const currentUserRole = req.user.role
-    if (currentUserRole !== 'ADMIN' && subscription.status !== 'active') {
+    const { id } = req.user
+    const user = await User.findById(id)
+    const subscription = user.subscription.status
+    const currentUserRole = user.role
+    if (currentUserRole !== 'ADMIN' && subscription !== 'active') {
         return next(createError(403, "please subscribe to access this"))
     }
     next()
