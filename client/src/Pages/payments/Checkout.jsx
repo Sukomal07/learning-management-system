@@ -71,7 +71,7 @@ function Checkout() {
                     <p className='px-4 text-xl tracking-wider text-slate-500 text-center'>This purchase will allow you to access all available course of our platform for <span className='text-2xl text-blue-500 font-bold'>1 year duration.</span></p>
                     <p className='px-5 text-xl tracking-wider text-yellow-500 text-center font-semibold'>All the existing and new launched courses will be available </p>
                     <p className='flex gap-1 items-center text-xl justify-center text-green-500'><BsCurrencyRupee /> <span className='text-3xl font-bold'>499</span>only</p>
-                    <p className='text-slate-500 text-xl font-semibold'>100% refund on cancellation within 14 days</p>
+                    <p className='text-slate-500 text-xl font-semibold px-4 text-center'>100% refund on cancellation within 14 days</p>
                     <button className='btn btn-primary w-[90%]' onClick={handleSubscription}>Buy Now</button>
                 </div>
             </div>
