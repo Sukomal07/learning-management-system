@@ -41,6 +41,7 @@ export const signup = async (req, res, next) => {
         if (req.file) {
             try {
                 const result = await cloudinary.v2.uploader.upload(req.file.path, {
+                    resource_type: 'image',
                     folder: 'lms',
                     width: 250,
                     height: 250,
@@ -259,6 +260,7 @@ export const updateProfile = async (req, res, next) => {
             await cloudinary.v2.uploader.destroy(user.avatar.public_id)
             try {
                 const result = await cloudinary.v2.uploader.upload(req.file.path, {
+                    resource_type: 'image',
                     folder: 'lms',
                     width: 250,
                     height: 250,

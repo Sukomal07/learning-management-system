@@ -69,6 +69,7 @@ export const createCourse = async (req, res, next) => {
         if (req.file) {
             try {
                 const result = await v2.uploader.upload(req.file.path, {
+                    resource_type: 'image',
                     folder: 'lms'
                 })
                 if (result) {
@@ -107,6 +108,7 @@ export const updateCourse = async (req, res, next) => {
         if (req.file) {
             try {
                 const result = await v2.uploader.upload(req.file.path, {
+                    resource_type: 'image',
                     folder: 'lms'
                 })
                 if (result) {
@@ -170,6 +172,7 @@ export const addLecturesToCourse = async (req, res, next) => {
         if (req.file) {
             try {
                 const result = await v2.uploader.upload(req.file.path, {
+                    resource_type: 'video',
                     folder: 'lms'
                 })
                 if (result) {
@@ -219,6 +222,7 @@ export const updateLectures = async (req, res, next) => {
         if (req.file) {
             try {
                 const result = await v2.uploader.upload(req.file.path, {
+                    resource_type: 'video',
                     folder: 'lms'
                 })
                 if (result) {
