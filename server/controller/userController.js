@@ -1,7 +1,7 @@
 import createError from "../utils/error.js"
 import User from '../models/userModel.js'
 import bcryptjs from 'bcryptjs'
-import cloudinary from 'cloudinary'
+import { v2 } from 'cloudinary'
 import fs from 'fs/promises'
 import sendMail from "../utils/sendMail.js"
 import crypto from 'crypto'
@@ -40,7 +40,7 @@ export const signup = async (req, res, next) => {
 
         if (req.file) {
             try {
-                const result = await cloudinary.v2.uploader.upload(req.file.path, {
+                const result = await v2.uploader.upload(req.file.path, {
                     resource_type: 'image',
                     folder: 'lms',
                     width: 250,
@@ -257,9 +257,11 @@ export const updateProfile = async (req, res, next) => {
         }
 
         if (req.file) {
-            await cloudinary.v2.uploader.destroy(user.avatar.public_id)
+            await v2.uploader.destroy(user.avatar.public_id, {
+                resource_type: 'image'
+            })
             try {
-                const result = await cloudinary.v2.uploader.upload(req.file.path, {
+                const result = await v2.uploader.upload(req.file.path, {
                     resource_type: 'image',
                     folder: 'lms',
                     width: 250,
@@ -294,6 +296,9 @@ export const deleteProfile = async (req, res, next) => {
         if (!user) {
             return next(createError(400, "user does not exists"))
         }
+        await v2.uploader.destroy(user.avatar.public_id, {
+            resource_type: 'image'
+        })
         res.status(200).json({
             success: true,
             message: "profile deleted successfully"

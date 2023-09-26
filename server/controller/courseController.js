@@ -18,23 +18,6 @@ export const getAllCourses = async (req, res, next) => {
     }
 }
 
-export const getLectures = async (req, res, next) => {
-    try {
-        const { id } = req.params
-        const course = await Course.findById(id)
-        if (!course) {
-            return next(createError(404, "No courses found"))
-        }
-        res.status(200).json({
-            success: true,
-            message: "Lectures fetched successfully",
-            lectures: course.lectures
-        })
-    } catch (error) {
-        return next(createError(500, error.message))
-    }
-}
-
 export const createCourse = async (req, res, next) => {
     try {
         const { title, description, category, createdBy } = req.body
@@ -107,6 +90,9 @@ export const updateCourse = async (req, res, next) => {
         )
         if (req.file) {
             try {
+                await v2.uploader.destroy(course.thumbnail.public_id, {
+                    resource_type: 'image'
+                })
                 const result = await v2.uploader.upload(req.file.path, {
                     resource_type: 'image',
                     folder: 'lms'
@@ -141,9 +127,29 @@ export const deleteCourse = async (req, res, next) => {
         if (!course) {
             return next(createError(404, "No courses found"))
         }
+        await v2.uploader.destroy(course.thumbnail.public_id, {
+            resource_type: 'image'
+        })
         res.status(200).json({
             success: true,
             message: "Course deleted successfully"
+        })
+    } catch (error) {
+        return next(createError(500, error.message))
+    }
+}
+
+export const getLectures = async (req, res, next) => {
+    try {
+        const { id } = req.params
+        const course = await Course.findById(id)
+        if (!course) {
+            return next(createError(404, "No courses found"))
+        }
+        res.status(200).json({
+            success: true,
+            message: "Lectures fetched successfully",
+            lectures: course.lectures
         })
     } catch (error) {
         return next(createError(500, error.message))
@@ -192,7 +198,7 @@ export const addLecturesToCourse = async (req, res, next) => {
         res.status(200).json({
             success: true,
             message: "lectures add successfully",
-            course
+            lectures: course.lectures
         })
     } catch (error) {
         return next(createError(500, error.message))
@@ -208,7 +214,7 @@ export const updateLectures = async (req, res, next) => {
             return next(createError(404, "No course found"));
         }
 
-        const lectureToUpdate = course.lectures.find((lecture) => lecture._id.toString() === lectureId);
+        const lectureToUpdate = course.lectures.find((lecture) => lecture._id.toString() === lectureId.toString());
         if (!lectureToUpdate) {
             return next(createError(404, "No lecture found"));
         }
@@ -221,6 +227,12 @@ export const updateLectures = async (req, res, next) => {
         }
         if (req.file) {
             try {
+                await v2.uploader.destroy(
+                    course.lectures[lectureToUpdate].lecture.public_id,
+                    {
+                        resource_type: 'video'
+                    }
+                )
                 const result = await v2.uploader.upload(req.file.path, {
                     resource_type: 'video',
                     folder: 'lms'
@@ -255,10 +267,16 @@ export const deleteLectures = async (req, res, next) => {
             return next(createError(404, "No course found"));
         }
 
-        const lectureIndex = course.lectures.findIndex((lecture) => lecture._id.toString() === lectureId);
+        const lectureIndex = course.lectures.findIndex((lecture) => lecture._id.toString() === lectureId.toString());
         if (lectureIndex === -1) {
             return next(createError(404, "No lecture found"));
         }
+        await v2.uploader.destroy(
+            course.lectures[lectureIndex].lecture.public_id,
+            {
+                resource_type: 'video'
+            }
+        )
 
         course.lectures.splice(lectureIndex, 1);
         course.numberOfLectures = course.lectures.length;
@@ -267,7 +285,7 @@ export const deleteLectures = async (req, res, next) => {
         res.status(200).json({
             success: true,
             message: "Lecture deleted successfully",
-            course,
+            lectures: course.lectures
         });
     } catch (error) {
         return next(createError(500, error.message));
