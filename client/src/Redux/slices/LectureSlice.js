@@ -15,8 +15,10 @@ export const getLectures = createAsyncThunk("/course/lecture", async (cid) => {
         const response = await axiosInstance.get(`/course/${cid}`);
         if (response.status === 200) {
             toast.dismiss();
-            toast.success(response.data.message);
-            return response?.data?.lectures
+            toast.success(response.data.message, {
+                position: 'bottom-right'
+            });
+            return response?.data
         } else {
             toast.dismiss();
             toast.error(response.data.message);
@@ -41,7 +43,7 @@ export const addLecture = createAsyncThunk("/course/lecture/add", async (data) =
         if (response.status === 200) {
             toast.dismiss();
             toast.success(response.data.message);
-            return response?.data?.course
+            return response?.data
         } else {
             toast.dismiss();
             toast.error(response.data.message);
@@ -66,7 +68,7 @@ export const updateLecture = createAsyncThunk("/course/lecture/update", async (d
         if (response.status === 200) {
             toast.dismiss();
             toast.success(response.data.message);
-            return response?.data?.course
+            return response?.data
         } else {
             toast.dismiss();
             toast.error(response.data.message);
@@ -87,7 +89,7 @@ export const deleteLecture = createAsyncThunk("/course/lecture/delete", async (d
         if (response.status === 200) {
             toast.dismiss();
             toast.success(response.data.message);
-            return response?.data?.course
+            return response?.data
         } else {
             toast.dismiss();
             toast.error(response.data.message);
@@ -106,13 +108,16 @@ const lectureSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder.addCase(getLectures.fulfilled, (state, action) => {
-            state.lectures = action.payload
+            state.lectures = action.payload?.lectures
         })
         builder.addCase(addLecture.fulfilled, (state, action) => {
-            state.lectures = action.payload?.course?.lectures
+            state.lectures = action.payload?.lectures
         })
         builder.addCase(updateLecture.fulfilled, (state, action) => {
-            state.lectures = action.payload?.course?.lectures
+            state.lectures = action.payload?.lectures
+        })
+        builder.addCase(deleteLecture.fulfilled, (state, action) => {
+            state.lectures = action.payload?.lectures
         })
     }
 })
