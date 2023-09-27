@@ -11,6 +11,7 @@ import CourseDescription from './pages/course/CourseDescription'
 import CourseList from './pages/course/CourseList'
 import CreateCourse from './pages/course/CreateCourse'
 import EditCourse from './pages/course/EditCourse'
+import AddCourseLecture from './pages/dashboard/AddCourseLecture'
 import CourseLectures from './pages/dashboard/CourseLectures'
 import HomePage from './pages/HomePage'
 import NotFound from './pages/NotFound'
@@ -50,7 +51,7 @@ function App() {
         <Route path='/course/description' element={<CourseDescription />} />
         <Route element={<RequiredAuth allowedRole={["ADMIN"]} />}>
           <Route path='/course/create' element={<CreateCourse />} />
-          <Route path='/course/editCourse/:id' element={<EditCourse />} />
+          <Route path='/course/:name/:id/editCourse' element={<EditCourse />} />
         </Route>
         <Route element={<RequiredAuth allowedRole={["ADMIN", "USER"]} />}>
           <Route path='/profile' element={<Profile />} />
@@ -58,7 +59,8 @@ function App() {
           <Route path='/course/:name/checkout' element={<Checkout />} />
           <Route path='/course/:name/checkout/success' element={<CheckoutSuccess />} />
           <Route path='/course/:name/checkout/fail' element={<CheckoutFail />} />
-          <Route path='/course/:name/lectures/:id' element={<CourseLectures />} />
+          <Route path='/course/:name/:id/lectures' element={<CourseLectures />} />
+          <Route path='/course/:name/:id/lectures/addlecture' element={<AddCourseLecture />} />
         </Route>
       </Routes>
     </>
