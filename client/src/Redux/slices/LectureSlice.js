@@ -15,9 +15,7 @@ export const getLectures = createAsyncThunk("/course/lecture", async (cid) => {
         const response = await axiosInstance.get(`/course/${cid}`);
         if (response.status === 200) {
             toast.dismiss();
-            toast.success(response.data.message, {
-                position: 'bottom-right'
-            });
+            toast.success(response.data.message);
             return response?.data
         } else {
             toast.dismiss();
