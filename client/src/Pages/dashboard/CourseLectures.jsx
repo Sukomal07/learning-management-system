@@ -26,14 +26,13 @@ function CourseLectures() {
         setAutoPlayNext(!autoPlayNext);
     };
     async function fetchData() {
-        await dispatch(getLectures(state._id));
+        await dispatch(getLectures(state?._id));
     }
 
     async function deleteHandle(cid, lectureId) {
         const data = { cid, lectureId };
         const res = await dispatch(deleteLecture(data));
         if (res?.payload?.success) {
-            fetchData()
             if (lectures) {
                 setCurrentVideo(0)
             }
@@ -42,8 +41,9 @@ function CourseLectures() {
     useEffect(() => {
         if (!state) {
             navigate("/courses");
+        } else {
+            fetchData();
         }
-        fetchData();
     }, []);
 
 
@@ -100,10 +100,10 @@ function CourseLectures() {
                         <div className="lg:w-[30%] md:w-[40%] lg:h-screen md:h-screen h-[50vh] overflow-y-scroll">
                             <div className="flex flex-col gap-4 z-10 lg:sticky md:sticky top-0">
                                 <h1 className="w-full text-center font-bold text-black capitalize bg-white h-16 flex items-center justify-center lg:text-2xl md:text-xl text-xl">
-                                    {state.title}
+                                    {state?.title}
                                 </h1>
                                 {role === "ADMIN" && (
-                                    <button onClick={() => navigate(`/course/${state.title}/lectures/addlecture/${state._id}`, { state: state })} className="btn btn-neutral normal-case w-full rounded">
+                                    <button onClick={() => navigate(`/course/${state?.title}/${state?._id}/lectures/addlecture`, { state: state })} className="btn btn-neutral normal-case w-full rounded">
                                         Add lecture
                                     </button>
                                 )}
@@ -116,7 +116,7 @@ function CourseLectures() {
                                                 <li key={lecture._id}>
                                                     <div className="flex justify-between items-center">
                                                         <span
-                                                            className="text-white text-xl font-semibold"
+                                                            className="text-white text-xl font-semibold capitalize"
                                                             onClick={() => setCurrentVideo(idx)}
                                                         >
                                                             {lecture?.title}
@@ -129,7 +129,7 @@ function CourseLectures() {
                                                                 <button
                                                                     className="text-xl text-red-500 hover:text-red-700 transform transition-transform hover:scale-110"
                                                                     onClick={() =>
-                                                                        deleteHandle(state._id, lecture?._id)
+                                                                        deleteHandle(state?._id, lecture?._id)
                                                                     }
                                                                 >
                                                                     <FiTrash2 />
@@ -148,10 +148,10 @@ function CourseLectures() {
             ) : (
                 <div className="flex flex-col h-[90vh] gap-5 items-center justify-center">
                     <p className="font-semibold text-2xl tracking-wider capitalize text-center">
-                        {state.title}
+                        {state?.title}
                     </p>
                     {role === "ADMIN" && (
-                        <button onClick={() => navigate(`/course/${state.title}/lectures/addlecture/${state._id}`, { state: state })} className="btn btn-neutral normal-case rounded">
+                        <button onClick={() => navigate(`/course/${state?.title}/${state?._id}/lectures/addlecture`, { state: state })} className="btn btn-neutral normal-case rounded">
                             Add lecture
                         </button>
                     )}

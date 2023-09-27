@@ -26,7 +26,7 @@ function CourseDescription() {
                     <p className="font-semibold lg:text-2xl text-xl text-yellow-400 capitalize">Number of lectures : <span className="text-xl text-blue-500">{state.numberOfLectures}</span></p>
                     {
                         role === 'ADMIN' || data?.subscription?.status === 'active' ? (
-                            <button className="btn btn-primary capitalize" onClick={() => navigate(`/course/${state.title}/lectures/${state._id}`, { state: state })}>Go to Lectures</button>
+                            <button className="btn btn-primary capitalize" onClick={() => navigate(`/course/${state.title}/${state._id}/lectures`, { state: state })}>Go to Lectures</button>
 
                         ) : (
 
@@ -40,7 +40,7 @@ function CourseDescription() {
                         role === 'ADMIN' && (
                             <div className="flex items-center gap-6 absolute lg:right-2 bottom-0 ">
                                 <button className="flex items-center text-red-500 gap-2 font-semibold hover:text-red-700" onClick={onDelete}><FiTrash2 /> Delete Course</button>
-                                <button onClick={() => navigate(`/course/editCourse/${state._id}`, { state: state })} className="flex items-center text-blue-500 gap-2 font-semibold hover:text-blue-700"><FiEdit /> Edit Course</button>
+                                <button onClick={() => navigate(`/course/${state.title}/${state._id}/editCourse`, { state: state })} className="flex items-center text-blue-500 gap-2 font-semibold hover:text-blue-700"><FiEdit /> Edit Course</button>
                             </div>
                         )
                     }
