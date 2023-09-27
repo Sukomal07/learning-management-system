@@ -10,7 +10,7 @@ import CourseCard from './CourseCard';
 function CourseList() {
     const dispatch = useDispatch();
 
-    const { courseData } = useSelector((state) => state.course)
+    const { courseData } = useSelector((state) => state?.course)
     const isLoggedIn = useSelector((state) => state?.auth?.isLoggedIn);
     const role = useSelector((state) => state?.auth?.role);
 

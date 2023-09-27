@@ -16,8 +16,9 @@ function CheckoutFail() {
     useEffect(() => {
         if (!state) {
             navigate("/")
+        } else {
+            onLoad()
         }
-        onLoad()
     }, [])
     const defaultOptions = {
         loop: true,

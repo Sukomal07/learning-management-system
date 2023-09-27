@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { FcAddImage } from 'react-icons/fc'
 import { useDispatch } from 'react-redux';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
@@ -12,12 +12,12 @@ function EditCourse() {
     const { id } = useParams();
     const [userInput, setUserInput] = useState({
         id: id,
-        title: state.title,
-        description: state.description,
-        category: state.category,
-        createdBy: state.createdBy,
+        title: state?.title,
+        description: state?.description,
+        category: state?.category,
+        createdBy: state?.createdBy,
         thumbnail: null,
-        previewImage: state.thumbnail?.secure_url
+        previewImage: state?.thumbnail?.secure_url
     })
     function handleChange(e) {
         e.preventDefault();
@@ -41,6 +41,12 @@ function EditCourse() {
             })
         }
     }
+
+    useEffect(() => {
+        if (!state) {
+            navigate("/courses")
+        }
+    }, [])
 
     async function onSubmit(e) {
         e.preventDefault();

@@ -42,9 +42,9 @@ function Checkout() {
                 paymentDetails.razorpay_signature = response.razorpay_signature
                 const res = await dispatch(verifyUserPayment(paymentDetails));
                 if (res?.payload?.success) {
-                    navigate(`/course/${state.title}/checkout/success`, { state: state });
+                    navigate(`/course/${state?.title}/checkout/success`, { state: state });
                 } else {
-                    navigate(`/course/${state.title}/checkout/fail`, { state: state });
+                    navigate(`/course/${state?.title}/checkout/fail`, { state: state });
                 }
             }
         }
@@ -60,8 +60,9 @@ function Checkout() {
     useEffect(() => {
         if (!state) {
             navigate("/courses")
+        } else {
+            onLoad()
         }
-        onLoad()
     }, [])
     return (
         <HomeLayout>
