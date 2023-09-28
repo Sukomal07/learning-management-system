@@ -52,6 +52,7 @@ function App() {
         <Route element={<RequiredAuth allowedRole={["ADMIN"]} />}>
           <Route path='/course/create' element={<CreateCourse />} />
           <Route path='/course/:name/:id/editCourse' element={<EditCourse />} />
+          <Route path='/course/:name/:id/lectures/addlecture' element={<AddCourseLecture />} />
         </Route>
         <Route element={<RequiredAuth allowedRole={["ADMIN", "USER"]} />}>
           <Route path='/profile' element={<Profile />} />
@@ -60,7 +61,6 @@ function App() {
           <Route path='/course/:name/checkout/success' element={<CheckoutSuccess />} />
           <Route path='/course/:name/checkout/fail' element={<CheckoutFail />} />
           <Route path='/course/:name/:id/lectures' element={<CourseLectures />} />
-          <Route path='/course/:name/:id/lectures/addlecture' element={<AddCourseLecture />} />
         </Route>
       </Routes>
     </>

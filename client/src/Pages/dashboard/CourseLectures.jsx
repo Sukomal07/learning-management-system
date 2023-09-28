@@ -14,16 +14,18 @@ function CourseLectures() {
     const { state } = useLocation();
     const { lectures } = useSelector((state) => state.lecture);
     const [currentVideo, setCurrentVideo] = useState(0);
-    const [autoPlayNext, setAutoPlayNext] = useState(true);
+    const [autoPlay, setAutoPlay] = useState(localStorage.getItem("autoPlay") === "true");
     const { role } = useSelector((state) => state.auth);
 
     const handleVideoEnded = () => {
-        if (autoPlayNext && currentVideo < lectures.length - 1) {
+        if (autoPlay && currentVideo < lectures.length - 1) {
             setCurrentVideo(currentVideo + 1);
         }
     };
     const toggleAutoPlay = () => {
-        setAutoPlayNext(!autoPlayNext);
+        const newValue = !autoPlay;
+        setAutoPlay(newValue);
+        localStorage.setItem("autoPlay", newValue.toString());
     };
     async function fetchData() {
         await dispatch(getLectures(state?._id));
@@ -71,7 +73,7 @@ function CourseLectures() {
                                         <span className="font-semibold text-black text-xl lg:block md:block hidden">Autoplay</span>
                                         <Switch
                                             onChange={toggleAutoPlay}
-                                            checked={autoPlayNext}
+                                            checked={autoPlay}
                                             height={24}
                                             width={48}
                                             uncheckedIcon={false}
@@ -84,7 +86,7 @@ function CourseLectures() {
                             <div className="h-full lg:overflow-y-scroll md:overflow-y-scroll px-4">
                                 <div className="lg:px-6 lg:mb-8 mb-4">
                                     {lectures.length > 0 && currentVideo !== undefined && (
-                                        <video key={lectures[currentVideo]?.lecture?.secure_url} controls autoPlay controlsList="nodownload" disablePictureInPicture onEnded={handleVideoEnded} className="w-full h-auto border-2 border-slate-500 rounded-md outline-none focus:outline-none">
+                                        <video key={lectures[currentVideo]?.lecture?.secure_url} controls autoPlay={autoPlay} controlsList="nodownload" disablePictureInPicture onEnded={handleVideoEnded} className="w-full h-auto border-2 border-slate-500 rounded-md outline-none focus:outline-none">
                                             <source src={lectures[currentVideo]?.lecture?.secure_url} type="video/mp4" />
                                         </video>
                                     )}
