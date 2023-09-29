@@ -13,6 +13,7 @@ import CreateCourse from './pages/course/CreateCourse'
 import EditCourse from './pages/course/EditCourse'
 import AddCourseLecture from './pages/dashboard/AddCourseLecture'
 import CourseLectures from './pages/dashboard/CourseLectures'
+import EditCourseLecture from './pages/dashboard/EditCourseLecture'
 import HomePage from './pages/HomePage'
 import NotFound from './pages/NotFound'
 import ChangePassword from './pages/password/ChangePassword'
@@ -53,6 +54,7 @@ function App() {
           <Route path='/course/create' element={<CreateCourse />} />
           <Route path='/course/:name/:id/editCourse' element={<EditCourse />} />
           <Route path='/course/:name/:id/lectures/addlecture' element={<AddCourseLecture />} />
+          <Route path='/course/:name/:id/lectures/editlecture' element={<EditCourseLecture />} />
         </Route>
         <Route element={<RequiredAuth allowedRole={["ADMIN", "USER"]} />}>
           <Route path='/profile' element={<Profile />} />

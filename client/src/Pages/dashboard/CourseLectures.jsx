@@ -51,7 +51,7 @@ function CourseLectures() {
 
     return (
         <div className="relative">
-            {lectures.length > 0 ? (
+            {lectures?.length > 0 ? (
                 <>
                     <div className="w-full flex lg:flex-row md:flex-row flex-col gap-4 lg:gap-0 md:gap-0 ">
                         <div className="lg:w-[70%] md:w-[60%] md:h-screen lg:h-screen h-[50vh] overflow-y-scroll ">
@@ -125,7 +125,8 @@ function CourseLectures() {
                                                         </span>
                                                         {role === "ADMIN" && (
                                                             <div className="flex gap-4">
-                                                                <button className="text-xl text-blue-500 transform transition-transform hover:scale-110 hover:text-blue-700">
+                                                                <button className="text-xl text-blue-500 transform transition-transform hover:scale-110 hover:text-blue-700"
+                                                                    onClick={() => navigate(`/course/${state?.title}/${state?._id}/lectures/editlecture`, { state: lectures[idx] })}>
                                                                     <FiEdit />
                                                                 </button>
                                                                 <button

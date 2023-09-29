@@ -55,7 +55,7 @@ export const addLecture = createAsyncThunk("/course/lecture/add", async (data) =
 })
 export const updateLecture = createAsyncThunk("/course/lecture/update", async (data) => {
     try {
-        toast.loading("Wait! adding lecture", {
+        toast.loading("Wait! updating lecture", {
             position: 'top-center'
         })
         const formData = new FormData();
