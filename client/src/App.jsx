@@ -12,6 +12,7 @@ import CourseList from './pages/course/CourseList'
 import CreateCourse from './pages/course/CreateCourse'
 import EditCourse from './pages/course/EditCourse'
 import AddCourseLecture from './pages/dashboard/AddCourseLecture'
+import AdminDashboard from './pages/dashboard/AdminDashboard'
 import CourseLectures from './pages/dashboard/CourseLectures'
 import EditCourseLecture from './pages/dashboard/EditCourseLecture'
 import HomePage from './pages/HomePage'
@@ -27,6 +28,41 @@ function App() {
   const location = useLocation();
 
   const isLoggedIn = useSelector((state) => state.auth?.isLoggedIn);
+  useEffect(() => {
+    const setTitle = () => {
+      const path = location.pathname;
+      if (path === '/') {
+        document.title = 'Learning Management System';
+      }
+      else if (path === '/about') {
+        document.title = 'About - Learning Management System';
+      } else if (path === '/contact') {
+        document.title = 'Contact - Learning Management System';
+      } else if (path === '/signup') {
+        document.title = 'Sign Up - Learning Management System';
+      } else if (path === '/login') {
+        document.title = 'Log In - Learning Management System';
+      } else if (path === '/courses') {
+        document.title = 'All courses - Learning Management System';
+      } else if (path === '/course/description') {
+        document.title = 'Course description - Learning Management System';
+      } else if (path === '/course/create') {
+        document.title = 'Create course - Learning Management System';
+      } else if (path === '/admin/dashboard') {
+        document.title = 'Admin dashboard - Learning Management System';
+      } else if (path === '/profile') {
+        document.title = 'Profile - Learning Management System';
+      } else if (path === '/profile/changePassword') {
+        document.title = 'Change Password - Learning Management System';
+      }
+    };
+
+    setTitle();
+
+    return () => {
+      setTitle();
+    };
+  }, [location.pathname]);
 
   useEffect(() => {
     if (isLoggedIn && (location.pathname === '/login' || location.pathname === '/signup')) {
@@ -55,6 +91,7 @@ function App() {
           <Route path='/course/:name/:id/editCourse' element={<EditCourse />} />
           <Route path='/course/:name/:id/lectures/addlecture' element={<AddCourseLecture />} />
           <Route path='/course/:name/:id/lectures/editlecture' element={<EditCourseLecture />} />
+          <Route path='/admin/dashboard' element={<AdminDashboard />} />
         </Route>
         <Route element={<RequiredAuth allowedRole={["ADMIN", "USER"]} />}>
           <Route path='/profile' element={<Profile />} />

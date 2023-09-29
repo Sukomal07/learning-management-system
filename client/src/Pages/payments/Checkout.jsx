@@ -61,6 +61,7 @@ function Checkout() {
         if (!state) {
             navigate("/courses")
         } else {
+            document.title = 'Checkout - Learning Management System'
             onLoad()
         }
     }, [])

@@ -46,6 +46,7 @@ function EditCourse() {
         if (!state) {
             navigate("/courses")
         }
+        document.title = 'Edit Course - Learning Management System'
     }, [])
 
     async function onSubmit(e) {

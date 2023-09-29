@@ -40,10 +40,15 @@ function CourseLectures() {
             }
         }
     }
+    function handleClick(idx) {
+        setCurrentVideo(idx)
+        document.title = `${lectures[idx]?.title} - Learning Management System`
+    }
     useEffect(() => {
         if (!state) {
             navigate("/courses");
         } else {
+            document.title = `${lectures[currentVideo]?.title} - Learning Management System`
             fetchData();
         }
     }, []);
@@ -119,7 +124,7 @@ function CourseLectures() {
                                                     <div className="flex justify-between items-center">
                                                         <span
                                                             className="text-white text-xl font-semibold capitalize"
-                                                            onClick={() => setCurrentVideo(idx)}
+                                                            onClick={() => handleClick(idx)}
                                                         >
                                                             {lecture?.title}
                                                         </span>

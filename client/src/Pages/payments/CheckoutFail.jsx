@@ -17,6 +17,7 @@ function CheckoutFail() {
         if (!state) {
             navigate("/")
         } else {
+            document.title = 'Checkout failed - Learning Management System'
             onLoad()
         }
     }, [])

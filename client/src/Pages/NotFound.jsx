@@ -1,8 +1,13 @@
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom'
 
 import errorImage from '../assets/Images/error.png'
 import Footer from '../components/Footer'
 function NotFound() {
+
+    useEffect(() => {
+        document.title = 'Page not found - Learning Management System'
+    }, [])
     return (
         <div className="h-screen w-screen flex flex-col relative justify-between items-center mx-auto bg-[#1A2238]">
             <img src={errorImage} alt="" className=' bg-transparent h-[70vh] brightness-50' />

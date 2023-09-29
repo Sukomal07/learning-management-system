@@ -16,6 +16,7 @@ function EditCourseLecture() {
         if (!state) {
             navigate("/courses")
         }
+        document.title = 'Edit lecture - Learning Management System'
     }, [])
 
     const [data, setData] = useState({

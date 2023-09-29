@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from "react-toastify";
@@ -15,7 +15,6 @@ function ForgotPassword() {
         cnfPassword: "",
         resetToken: resetToken
     })
-    console.log(data.resetToken);
     function handleUserInput(e) {
         const { name, value } = e.target
         setData({ ...data, [name]: value })
@@ -45,6 +44,10 @@ function ForgotPassword() {
             }
         }
     }
+
+    useEffect(() => {
+        document.title = 'Reset Password - Learning Management System'
+    }, [])
     return (
         <>
             <div className="flex flex-col gap-10 justify-center items-center mb-1 h-[90vh]">

@@ -16,6 +16,8 @@ function AddCourseLecture() {
         if (!state) {
             navigate("/courses")
         }
+        document.title = 'Add lecture - Learning Management System'
+
     }, [])
 
     const [data, setData] = useState({
