@@ -228,7 +228,7 @@ export const updateLectures = async (req, res, next) => {
         if (req.file) {
             try {
                 await v2.uploader.destroy(
-                    course.lectures[lectureToUpdate].lecture.public_id,
+                    lectureToUpdate.lecture.public_id,
                     {
                         resource_type: 'video'
                     }
