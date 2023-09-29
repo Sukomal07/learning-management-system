@@ -31,3 +31,20 @@ export const contactUs = async (req, res, next) => {
     }
     await sendMail(process.env.GMAIL_ID, email, replySubject, replyText)
 }
+
+export const userStats = async (req, res, next) => {
+    try {
+        const allUserCount = await User.countDocuments();
+        const subscribedUser = await User.countDocuments({
+            'subscription.status': 'active'
+        });
+        res.status(200).json({
+            success: true,
+            message: 'stats fetched successfully',
+            allUserCount,
+            subscribedUser
+        })
+    } catch (error) {
+        return (next(createError(400, error.message)))
+    }
+}
