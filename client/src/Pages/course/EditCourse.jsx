@@ -89,16 +89,16 @@ function EditCourse() {
                         <input type="text" name='title' id='title' value={userInput.title} onChange={handleChange} placeholder="Type here" className="input input-bordered input-accent w-full text-white " />
                     </div>
                     <div className='flex flex-col gap-3'>
-                        <label className='font-semibold text-white text-xl' htmlFor="description">Course Description</label>
-                        <input type="text" name='description' id='description' value={userInput.description} onChange={handleChange} placeholder="Type here" className="input input-bordered input-accent w-full text-white " />
-                    </div>
-                    <div className='flex flex-col gap-3'>
                         <label className='font-semibold text-white text-xl' htmlFor="createdBy">Course Instructor</label>
                         <input type="text" name='createdBy' id='createdBy' value={userInput.createdBy} onChange={handleChange} placeholder="Type here" className="input input-bordered input-accent w-full text-white" />
                     </div>
                     <div className='flex flex-col gap-3'>
                         <label className='font-semibold text-white text-xl' htmlFor="category">Course Domain</label>
                         <input type="text" name='category' id='category' value={userInput.category} onChange={handleChange} placeholder="Type here" className="input input-bordered input-accent w-full text-white" />
+                    </div>
+                    <div className='flex flex-col gap-3'>
+                        <label className='font-semibold text-white text-xl' htmlFor="description">Course Description</label>
+                        <textarea type="text" name='description' id='description' value={userInput.description} onChange={handleChange} placeholder="Type here" className="textarea textarea-accent resize-y min-h-16 w-full text-white " />
                     </div>
                     <button type='submit' className='btn btn-primary'>Confirm</button>
                 </div>

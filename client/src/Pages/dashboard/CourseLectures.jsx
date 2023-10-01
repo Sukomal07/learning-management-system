@@ -42,13 +42,13 @@ function CourseLectures() {
     }
     function handleClick(idx) {
         setCurrentVideo(idx)
-        document.title = `${lectures[idx]?.title} - Learning Management System`
+        document.title = `${lectures && lectures[idx]?.title} - Learning Management System`
     }
     useEffect(() => {
         if (!state) {
             navigate("/courses");
         } else {
-            document.title = `${lectures[currentVideo]?.title} - Learning Management System`
+            document.title = `${lectures && lectures[currentVideo]?.title} - Learning Management System`
             fetchData();
         }
     }, []);

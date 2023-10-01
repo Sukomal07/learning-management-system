@@ -29,7 +29,7 @@ function CourseDescription() {
                 <div className="lg:w-1/2 w-full px-12 py-12 flex flex-col gap-4 ">
                     <h1 className="font-bold text-yellow-500 lg:text-4xl text-xl capitalize">{state.title}</h1>
                     <p className="font-semibold lg:text-2xl text-xl text-amber-500 capitalize">Course Description :</p>
-                    <p className="font-semibold lg:text-xl text-xs text-blue-500 capitalize">{state.description}</p>
+                    <p className="font-semibold lg:text-xl text-xs text-white normal-case tracking-wider">{state.description}</p>
                 </div>
             </div>
         </HomeLayout>

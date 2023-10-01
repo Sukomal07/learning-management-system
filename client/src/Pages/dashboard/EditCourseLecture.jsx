@@ -90,7 +90,7 @@ function EditCourseLecture() {
                 </div>
                 <div className='flex flex-col gap-3'>
                     <label className='font-semibold text-white text-xl' htmlFor="description">Lecture Description</label>
-                    <textarea name='description' id='description' value={data.description} onChange={handleChange} placeholder="Type here" className="textarea textarea-accent text-white min-h-16"></textarea>
+                    <textarea name='description' id='description' value={data.description} onChange={handleChange} placeholder="Type here" className="textarea textarea-accent text-white min-h-auto resize-y"></textarea>
                 </div>
                 <button type='submit' className='btn btn-primary'>Confirm</button>
             </div>
