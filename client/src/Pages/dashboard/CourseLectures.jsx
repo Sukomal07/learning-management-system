@@ -42,7 +42,6 @@ function CourseLectures() {
     }
     function handleClick(idx) {
         setCurrentVideo(idx)
-        document.title = `${lectures && lectures[idx]?.title} - Learning Management System`
     }
     useEffect(() => {
         if (!state) {
@@ -50,8 +49,13 @@ function CourseLectures() {
         } else {
             fetchData();
         }
-        document.title = `${lectures && lectures[currentVideo]?.title} - Learning Management System`
     }, []);
+
+    useEffect(() => {
+        if (lectures && currentVideo !== undefined) {
+            document.title = `${lectures[currentVideo]?.title} - Learning Management System`;
+        }
+    }, [lectures, currentVideo]);
 
 
     return (
