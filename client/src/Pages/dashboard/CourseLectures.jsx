@@ -48,9 +48,9 @@ function CourseLectures() {
         if (!state) {
             navigate("/courses");
         } else {
-            document.title = `${lectures && lectures[currentVideo]?.title} - Learning Management System`
             fetchData();
         }
+        document.title = `${lectures && lectures[currentVideo]?.title} - Learning Management System`
     }, []);
 
 
