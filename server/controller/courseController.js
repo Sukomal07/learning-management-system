@@ -2,11 +2,19 @@ import Course from '../models/courseModel.js';
 import createError from '../utils/error.js'
 import { v2 } from 'cloudinary'
 import fs from 'fs/promises'
+import { myCache } from '../app.js';
+
 export const getAllCourses = async (req, res, next) => {
     try {
-        const courses = await Course.find({}).select('-lectures');
-        if (!courses) {
-            return next(createError(404, "No courses found"))
+        let courses;
+        if (myCache.has("courses")) {
+            courses = JSON.parse(myCache.get("courses"))
+        } else {
+            courses = await Course.find({}).select('-lectures');
+            if (!courses) {
+                return next(createError(404, "No courses found"))
+            }
+            myCache.set("courses", JSON.stringify(courses))
         }
         res.status(200).json({
             success: true,
@@ -65,6 +73,7 @@ export const createCourse = async (req, res, next) => {
             }
         }
         await newCourse.save()
+        myCache.del("courses")
         res.status(201).json({
             success: true,
             message: "course created successfully",
@@ -110,6 +119,7 @@ export const updateCourse = async (req, res, next) => {
             return next(createError(404, "No courses found"))
         }
         await course.save()
+        myCache.del("courses")
         res.status(200).json({
             success: true,
             message: "course updated successfully",
@@ -130,6 +140,7 @@ export const deleteCourse = async (req, res, next) => {
         await v2.uploader.destroy(course.thumbnail.public_id, {
             resource_type: 'image'
         })
+        myCache.del("courses")
         res.status(200).json({
             success: true,
             message: "Course deleted successfully"
@@ -141,20 +152,28 @@ export const deleteCourse = async (req, res, next) => {
 
 export const getLectures = async (req, res, next) => {
     try {
-        const { id } = req.params
-        const course = await Course.findById(id)
-        if (!course) {
-            return next(createError(404, "No courses found"))
+        const { id } = req.params;
+        let lectures;
+        if (myCache.has("lectures")) {
+            lectures = JSON.parse(myCache.get("lectures"));
+        } else {
+            const course = await Course.findById(id);
+            if (!course) {
+                return next(createError(404, "No courses found"));
+            }
+            lectures = course.lectures
+            myCache.set("lectures", JSON.stringify(lectures));
         }
-        res.status(200).json({
+        return res.status(200).json({
             success: true,
             message: "Lectures fetched successfully",
-            lectures: course.lectures
-        })
+            lectures
+        });
     } catch (error) {
-        return next(createError(500, error.message))
+        return next(createError(500, error.message));
     }
-}
+};
+
 
 export const addLecturesToCourse = async (req, res, next) => {
     try {
@@ -195,6 +214,7 @@ export const addLecturesToCourse = async (req, res, next) => {
         course.lectures.push(lectureData)
         course.numberOfLectures = course.lectures.length
         await course.save()
+        myCache.del("lectures")
         res.status(200).json({
             success: true,
             message: "lectures add successfully",
@@ -248,6 +268,7 @@ export const updateLectures = async (req, res, next) => {
             }
         }
         await course.save();
+        myCache.del("lectures");
         res.status(200).json({
             success: true,
             message: "Lecture updated successfully",
@@ -282,6 +303,7 @@ export const deleteLectures = async (req, res, next) => {
         course.numberOfLectures = course.lectures.length;
 
         await course.save();
+        myCache.del("lectures");
         res.status(200).json({
             success: true,
             message: "Lecture deleted successfully",

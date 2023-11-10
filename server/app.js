@@ -7,9 +7,11 @@ import courseRoutes from './routes/courseRoutes.js'
 import paymentRoutes from './routes/paymentRoutes.js'
 import miscRoutes from './routes/miscellaneousRoutes.js'
 import errorMiddleware from './middleware/errorMiddleware.js'
+import NodeCache from 'node-cache'
 
 dotenv.config()
 const app = express()
+export const myCache = new NodeCache();
 
 app.use(cookieParser())
 app.use(express.json())
