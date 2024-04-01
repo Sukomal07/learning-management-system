@@ -1,3 +1,4 @@
+import Cookies from 'js-cookie'
 import { FiMenu } from 'react-icons/fi'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
@@ -16,6 +17,7 @@ function HomeLayout({ children }) {
     const firstName = name ? name.split(' ')[0] : '';
     async function onLogout() {
         await dispatch(logout())
+        Cookies.remove('authToken')
     }
 
     return (

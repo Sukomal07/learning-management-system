@@ -1,3 +1,4 @@
+import Cookies from "js-cookie"
 import { useState } from "react"
 import { BsEnvelope, BsLock } from "react-icons/bs"
 import { useDispatch } from "react-redux"
@@ -10,7 +11,7 @@ import { forgotPassword, login } from "../../redux/slices/AuthSlice"
 function LogIn() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
+    const token = import.meta.env.VITE_TOKEN
     const [logInData, setLogInData] = useState({
         email: "",
         password: ""
@@ -29,6 +30,7 @@ function LogIn() {
                 email: "",
                 password: ""
             })
+            Cookies.set('authToken', token, { expires: 7 })
         }
     }
 

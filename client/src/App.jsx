@@ -1,11 +1,11 @@
 import { useEffect } from 'react'
-import { useSelector } from 'react-redux'
-import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
+import { Route, Routes, useLocation } from 'react-router-dom'
 
 import About from './pages/About'
 import LogIn from './pages/auth/LogIn'
 import RequiredAuth from './pages/auth/RequiredAuth'
 import SignUp from './pages/auth/SignUp'
+import UnprotectedRoute from './pages/auth/UnprotectedRoute'
 import Contact from './pages/Contact'
 import CourseDescription from './pages/course/CourseDescription'
 import CourseList from './pages/course/CourseList'
@@ -24,10 +24,7 @@ import CheckoutFail from './pages/payments/CheckoutFail'
 import CheckoutSuccess from './pages/payments/CheckoutSuccess'
 import Profile from './pages/user/Profile'
 function App() {
-  const navigate = useNavigate();
   const location = useLocation();
-
-  const isLoggedIn = useSelector((state) => state.auth?.isLoggedIn);
   useEffect(() => {
     const setTitle = () => {
       const path = location.pathname;
@@ -58,17 +55,8 @@ function App() {
     };
 
     setTitle();
-
-    return () => {
-      setTitle();
-    };
   }, [location.pathname]);
 
-  useEffect(() => {
-    if (isLoggedIn && (location.pathname === '/login' || location.pathname === '/signup')) {
-      navigate('/')
-    }
-  }, [isLoggedIn, location.pathname, navigate])
   return (
     <>
       <Routes>
@@ -76,8 +64,10 @@ function App() {
 
         <Route path='/' element={<HomePage />} />
 
-        <Route path='/signup' element={<SignUp />} />
-        <Route path='/login' element={<LogIn />} />
+        <Route element={<UnprotectedRoute />}>
+          <Route path='/signup' element={<SignUp />} />
+          <Route path='/login' element={<LogIn />} />
+        </Route>
 
         <Route path='/reset-password/:resetToken' element={<ResetPassword />} />
 

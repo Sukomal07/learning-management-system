@@ -1,3 +1,4 @@
+import Cookies from 'js-cookie'
 import { useState } from 'react'
 import { BsCloudUpload, BsEnvelope, BsLock, BsPerson } from 'react-icons/bs'
 import { useDispatch } from 'react-redux'
@@ -11,7 +12,7 @@ function SignUp() {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
+    const token = import.meta.env.VITE_TOKEN
     const [viewImage, setViewImage] = useState("");
 
     const [signUpData, setSignUpData] = useState({
@@ -57,6 +58,7 @@ function SignUp() {
                 password: ""
             })
             setViewImage("")
+            Cookies.set('authToken', token, { expires: 7 })
         }
     }
 
