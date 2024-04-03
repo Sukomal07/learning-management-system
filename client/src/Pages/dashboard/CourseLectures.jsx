@@ -43,6 +43,18 @@ function CourseLectures() {
     function handleClick(idx) {
         setCurrentVideo(idx)
     }
+
+    const splitParagraph = (paragraph) => {
+        const sentences = paragraph.split('.');
+        return (
+            <ul className="flex flex-col gap-4">
+                {sentences.map((sentence, index) => (
+                    <li key={index} className="capitalize text-white px-4 list-disc">{sentence}</li>
+                ))}
+            </ul>
+        );
+    }
+
     useEffect(() => {
         if (!state) {
             navigate("/courses");
@@ -62,7 +74,7 @@ function CourseLectures() {
         <div className="relative">
             {lectures?.length > 0 ? (
                 <>
-                    <div className="w-full flex lg:flex-row md:flex-row flex-col gap-4 lg:gap-0 md:gap-0 ">
+                    <div className="w-full flex lg:flex-row md:flex-row flex-col gap-4 lg:gap-0 md:gap-0 pb-16 ">
                         <div className="lg:w-[70%] md:w-[60%] md:h-screen lg:h-screen h-[50vh] overflow-y-scroll ">
                             <div className="w-full h-16 flex justify-between items-center lg:px-12 px-6 bg-white lg:sticky md:sticky top-0 z-10 mb-4">
                                 <div className="flex gap-8 items-center  h-full">
@@ -100,11 +112,9 @@ function CourseLectures() {
                                         </video>
                                     )}
                                 </div>
-                                <div className="flex flex-col gap-4 px-8">
+                                <div className="flex flex-col gap-4 p-8">
                                     <h1 className="text-white font-bold text-3xl">Overview :</h1>
-                                    <p className="text-2xl capitalize text-white tracking-wider">
-                                        {lectures[currentVideo]?.description}
-                                    </p>
+                                    {splitParagraph(lectures[currentVideo]?.description)}
                                 </div>
                             </div>
                         </div>
