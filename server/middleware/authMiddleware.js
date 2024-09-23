@@ -25,7 +25,7 @@ export const authorizedRole = (...rols) => async (req, res, next) => {
 export const verifySubscription = async (req, res, next) => {
     const { id } = req.user
     const user = await User.findById(id)
-    const subscription = user.subscription.status
+    const subscription = user?.subscription?.status
     const currentUserRole = user.role
     if (currentUserRole !== 'ADMIN' && subscription !== 'active') {
         return next(createError(403, "please subscribe to access this"))
