@@ -1,0 +1,30 @@
+name: Backend CI
+
+on:
+  push:
+    paths:
+      - 'server/**'
+      - '.github/workflows/backend-ci.yml'
+
+jobs:
+  backend-build:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: server
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Build Backend Docker Image
+        run: docker build -t lms-backend:ci .

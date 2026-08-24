@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: lms-backend
+
+spec:
+  replicas: 2
+
+  selector:
+    matchLabels:
+      app: lms-backend
+
+  template:
+    metadata:
+      labels:
+        app: lms-backend
+
+    spec:
+      containers:
+      - name: backend
+
+        image: jaydipaws/lms-backend:latest
+
+        ports:
+        - containerPort: 5000
+
+        imagePullPolicy: Always
